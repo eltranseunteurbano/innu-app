@@ -85,9 +85,15 @@ const useStyles = makeStyles((theme) =>
         background: darken(theme.palette.MidGrey.main, 0.25),
       },
     },
-    text_primary: {},
-    text_secondary: {},
-    text_grey: {},
+    text_primary: {
+      color: theme.palette.red.main,
+    },
+    text_secondary: {
+      color: theme.palette.blue.main,
+    },
+    text_grey: {
+      color: theme.palette.MidGrey.main,
+    },
   })
 );
 

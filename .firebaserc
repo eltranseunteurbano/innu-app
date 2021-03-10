@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "innu-40599"
+  },
+  "targets": {
+    "innu-40599": {
+      "hosting": {
+        "app": [
+          "innu-40599"
+        ],
+        "storybook": [
+          "innu-storybook"
+        ]
+      }
+    }
   }
 }
