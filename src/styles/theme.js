@@ -18,9 +18,13 @@ const themeOptions = {
     },
     esmerald: {
       main: "#DAFFEC",
+      tag: "#31B971",
+      button: "#99FAC8",
     },
     lavander: {
       main: "#F0EBFD",
+      tag: "#8961EF",
+      button: "#CFBFF7",
     },
     sky: {
       main: "#E7F0FC",
@@ -32,10 +36,10 @@ const themeOptions = {
     deepGrey: {
       main: "#4D5661",
     },
-    MidGrey: {
-      main: "#8A95A1",
+    midGrey: {
+      main: "#798796",
     },
-    MistGrey: {
+    mistGrey: {
       main: "#9AA2AC",
     },
     clearGrey: {

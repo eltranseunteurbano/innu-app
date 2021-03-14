@@ -1,16 +1,17 @@
 import React from "react";
-import Button from "../../components/Button/Button";
-import { AccessAlarm } from "@material-ui/icons";
+import TextField from "../../components/TextField/TextField";
+import Chips from "../../components/Chips/Chips";
 
 const Prueba = () => {
   return (
     <div>
-      <Button color="grey" variant="contained" className="m-2">
-        Label
-      </Button>
-      <Button color="grey" variant="contained" endIcon={<AccessAlarm />}>
-        Label
-      </Button>
+      <TextField
+        label="Label"
+        placeholder="Placeholder"
+        fullWidth
+        className="m-2"
+      />
+      <Chips label="Prueba chip" />
     </div>
   );
 };

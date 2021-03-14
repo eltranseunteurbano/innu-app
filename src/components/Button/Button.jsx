@@ -57,11 +57,11 @@ const useStyles = makeStyles((theme) =>
       },
     },
     outlined_grey: {
-      borderColor: theme.palette.MidGrey.main,
-      background: `${theme.palette.MidGrey.main}20`,
+      borderColor: theme.palette.midGrey.main,
+      background: `${theme.palette.midGrey.main}20`,
       color: theme.palette.deepGrey.main,
       "&:hover": {
-        background: `${theme.palette.MidGrey.main}40`,
+        background: `${theme.palette.midGrey.main}40`,
       },
     },
     contained_primary: {
@@ -79,10 +79,10 @@ const useStyles = makeStyles((theme) =>
       },
     },
     contained_grey: {
-      background: theme.palette.MidGrey.main,
+      background: theme.palette.midGrey.main,
       color: theme.palette.white.main,
       "&:hover": {
-        background: darken(theme.palette.MidGrey.main, 0.25),
+        background: darken(theme.palette.midGrey.main, 0.25),
       },
     },
     text_primary: {
@@ -92,13 +92,14 @@ const useStyles = makeStyles((theme) =>
       color: theme.palette.blue.main,
     },
     text_grey: {
-      color: theme.palette.MidGrey.main,
+      color: theme.palette.midGrey.main,
     },
   })
 );
 
 Button.propTypes = {
   children: PropTypes.string.isRequired,
+  className: PropTypes.string,
   color: PropTypes.oneOf(["primary", "secondary", "grey"]),
   variant: PropTypes.oneOf(["outlined", "contained", "text"]),
 };

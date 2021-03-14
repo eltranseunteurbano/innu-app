@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: build
-          path: build
+          path: storybook-static
   deploy:
     name: Deploy
     needs: build
