@@ -6,7 +6,6 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
-import { FormHelperText } from "@material-ui/core";
 import { ErrorOutline as ErrorOutlineIcon } from "@material-ui/icons/";
 
 const TextField = ({
@@ -15,17 +14,19 @@ const TextField = ({
   type = "text",
   label = "Label",
   placeholder = "Placeholder",
-  helperText = "Texto de ayuda",
   endAdornment,
   ...props
 }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const childProps = { ...props };
+  delete childProps.formik;
+  delete childProps.valueId;
 
   return (
     <Box className={className}>
       <MuiTextField
-        {...props}
+        {...childProps}
         variant={variant}
         placeholder={placeholder}
         type={type}
@@ -54,13 +55,6 @@ const TextField = ({
           ),
         }}
       />
-      <FormHelperText
-        className={classes.helperText}
-        disabled={props.disabled}
-        error={props.error}
-      >
-        {helperText}
-      </FormHelperText>
     </Box>
   );
 };
@@ -69,6 +63,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       "& .MuiOutlinedInput-root": {
+        backgroundColor: theme.palette.white.main,
         "& fieldset": {
           ...theme.typography.body1,
           color: theme.palette.deepGrey.main,
@@ -96,9 +91,6 @@ const useStyles = makeStyles((theme) =>
           backgroundColor: theme.palette.clearGrey.main,
         },
       },
-    },
-    helperText: {
-      ...theme.typography.caption,
     },
     label: {
       position: "unset",

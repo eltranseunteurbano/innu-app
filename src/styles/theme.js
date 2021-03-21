@@ -126,6 +126,13 @@ const themeOptions = {
       fontWeight: 500,
       lineHeight: "1rem",
     },
+    links: {
+      fontSize: "0.75rem",
+      fontWeight: 500,
+      lineHeight: "1rem",
+      textDecoration: "underline",
+      fontFamily: '"Manrope", sans-serif',
+    },
     overline: {
       fontSize: "0.625rem",
       fontWeight: 700,

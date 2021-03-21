@@ -1,25 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button as ButtonMaterial } from "@material-ui/core";
-import {
-  makeStyles,
-  createStyles,
-  useTheme,
-  darken,
-} from "@material-ui/core/styles";
+import { makeStyles, createStyles, darken } from "@material-ui/core/styles";
 import cn from "classnames";
-// import * as theme from "../../styles/theme";
 
 const Button = ({
   children,
-  color = "Red",
+  color = "primary",
   variant = "contained",
   className,
   ...props
 }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  console.log(theme);
   return (
     <ButtonMaterial
       {...props}

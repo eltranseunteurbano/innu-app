@@ -6,7 +6,7 @@ export default {
   title: "Atomos/Text Field",
   component: TextFields,
   argTypes: {
-    label: { control: "text" },
+    name: { control: "text" },
     placeholder: { control: "text" },
     helperText: { control: "text" },
   },
