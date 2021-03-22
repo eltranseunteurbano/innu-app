@@ -8,6 +8,7 @@ const GlobalCss = withStyles(() =>
       "*": {
         margin: 0,
         padding: 0,
+        transition: "all .4s",
       },
       // bootstrap like spacing helpers (mt-3, pl-5, etc...)
       ...getSpacingHelpers(customTheme),

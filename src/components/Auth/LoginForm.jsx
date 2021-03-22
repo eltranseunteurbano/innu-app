@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import {
-  Box,
+  Container,
   Typography,
   InputAdornment,
   IconButton,
@@ -27,7 +27,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Box className={classes.root}>
+    <Container disableGutters maxWidth="sm" className={classes.root}>
       <Typography className={classes.title}>Inicia sesión en INNU</Typography>
       <form className={classes.form} onSubmit={formik.handleSubmit}>
         <FormikTextField
@@ -80,7 +80,7 @@ const LoginForm = () => {
       <Button fullWidth component={Link} variant="outlined">
         Crear Organización
       </Button>
-    </Box>
+    </Container>
   );
 };
 
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
-      borderRadius: theme.spacing(2),
+      borderRadius: theme.spacing(2, 2, 0, 0),
       background: theme.palette.rose.main,
       padding: theme.spacing(3, 4),
       boxSizing: "border-box",
@@ -96,6 +96,9 @@ const useStyles = makeStyles((theme) =>
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
+      [theme.breakpoints.up("md")]: {
+        borderRadius: theme.spacing(2),
+      },
     },
     form: {
       width: "100%",

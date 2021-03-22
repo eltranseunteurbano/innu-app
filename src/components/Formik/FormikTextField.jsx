@@ -9,7 +9,6 @@ const FormikTextField = (props) => {
   } = props;
 
   const value = values[valueId] || values[valueId] === 0 ? values[valueId] : "";
-  console.log(errors);
   return (
     <TextField
       {...props}

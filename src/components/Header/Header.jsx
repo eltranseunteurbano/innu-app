@@ -5,6 +5,8 @@ import Logo from "../../assets/icons/Logo";
 import { MenuOutlined as MenuOutlinedIcon } from "@material-ui/icons";
 import { StickyContainer, Sticky } from "react-sticky";
 import cn from "classnames";
+import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const classes = useStyles();
@@ -22,9 +24,19 @@ const Header = () => {
               style={{ ...style, top: 0 }}
             >
               <Logo />
-              <IconButton className={classes.respMenu}>
-                <MenuOutlinedIcon />
-              </IconButton>
+              <nav>
+                <IconButton className={classes.respMenu}>
+                  <MenuOutlinedIcon />
+                </IconButton>
+
+                <Button
+                  variant="text"
+                  className={classes.menuItem}
+                  component={Link}
+                >
+                  Ayuda
+                </Button>
+              </nav>
             </header>
           );
         }}
@@ -37,6 +49,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
+      minHeight: theme.spacing(6),
       backgroundColor: theme.palette.white.main,
       padding: theme.spacing(2, 3),
       boxSizing: "border-box",
@@ -50,6 +63,16 @@ const useStyles = makeStyles((theme) =>
     },
     respMenu: {
       color: theme.palette.red.main,
+      display: "flex",
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+    },
+    menuItem: {
+      display: "none",
+      [theme.breakpoints.up("md")]: {
+        display: "flex",
+      },
     },
   })
 );

@@ -20,9 +20,7 @@ const useLogin = () => {
   const formik = useFormik({
     initialValues,
     validate: getFormikValidator(rules, undefined, undefined, customMessages),
-    onSubmit: (email, password) => {
-      console.log(email, password);
-    },
+    onSubmit: (email, password) => {},
   });
 
   return {
