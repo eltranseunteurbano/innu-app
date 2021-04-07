@@ -1,0 +1,10 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyCkvmuUkkcREMvDrHoLjBTnu9ndlQgPXf8",
+  authDomain: "innu-40599.firebaseapp.com",
+  projectId: "innu-40599",
+  storageBucket: "innu-40599.appspot.com",
+  messagingSenderId: "460681569416",
+  appId: "1:460681569416:web:b9a657f59da5ec66a62b3d",
+};
+
+export default firebaseConfig;

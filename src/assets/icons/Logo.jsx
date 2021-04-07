@@ -20,14 +20,14 @@ const Logo = ({ className }) => {
         fill="#FF5F21"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M72.249 16H74.9156L74.9156 0H72.249L72.249 16ZM74.9156 16H77.5823L77.5823 0H74.9156L74.9156 16Z"
         fill="#F5B840"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M78.4712 16H81.1378H81.1379H83.8045L83.8045 0H81.1379H81.1378H78.4712L78.4712 16Z"
         fill="#2D75E1"
       />

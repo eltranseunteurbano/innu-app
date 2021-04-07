@@ -4,18 +4,22 @@ import customTheme from "../styles/theme";
 import GlobalCss from "../styles/GlobalCss";
 import Header from "../components/Header/Header";
 import Login from "../containers/Auth/Login";
+import AppRoute from "./AppRoute";
 import Error404 from "../containers/Error404/Error404";
-import { LOGIN, ERROR } from "./Routes";
+import { LOGIN, APP, ERROR } from "./Routes";
 
 function App() {
   return (
     <ThemeProvider theme={customTheme}>
       <GlobalCss />
       <Router>
-        <Header />
+        {/* <Header /> */}
         <Switch>
           <Route path={LOGIN} exact component={Login} />
           <Route path={ERROR} exact component={Error404} />
+        </Switch>
+        <Switch>
+          <Route path={APP} exact component={AppRoute} />
         </Switch>
       </Router>
     </ThemeProvider>
