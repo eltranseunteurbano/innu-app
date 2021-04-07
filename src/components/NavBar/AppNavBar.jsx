@@ -6,6 +6,13 @@ import {
   Typography,
   Avatar,
   ButtonBase,
+  Menu,
+  MenuItem,
+  Paper,
+  MenuList,
+  Popper,
+  Grow,
+  ClickAwayListener,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
@@ -19,9 +26,14 @@ import DrawerMenu from "./DrawerMenu";
 const AppNavBar = () => {
   const classes = useStyles();
   const [showDrawer, setShowDrawer] = React.useState(false);
+  const [showMenu, setShowMenu] = React.useState(null);
 
   const onClose = () => {
     setShowDrawer(!showDrawer);
+  };
+
+  const onShowMenu = (event) => {
+    setShowMenu(event.currentTarget);
   };
 
   return (
@@ -38,7 +50,7 @@ const AppNavBar = () => {
             <Logo className={classes.navLogo} />
           </Box>
           <Typography className={classes.title}>Dashboard</Typography>
-          <ButtonBase className={classes.avatar}>
+          <ButtonBase className={classes.avatar} onClick={onShowMenu}>
             <Divider orientation="vertical" flexItem />
             <Avatar variant="rounded" className={classes.btnAvatar}>
               J
@@ -46,6 +58,27 @@ const AppNavBar = () => {
             <Typography className={classes.btnText}>Jhon Diaz</Typography>
             <ArrowDropDownRoundedIcon />
           </ButtonBase>
+          <Menu
+            id="menu-header-profile"
+            anchorEl={showMenu}
+            keepMounted
+            open={!!showMenu}
+            onClose={() => setShowMenu(!showMenu)}
+            elevation={0}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            classes={{ paper: classes.headerProfileMenu }}
+          >
+            <MenuItem>Perfil</MenuItem>
+            <MenuItem>Cerrar sesión</MenuItem>
+          </Menu>
         </nav>
       </header>
       <DrawerMenu open={showDrawer} onClose={onClose} />
@@ -100,6 +133,9 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.up("sm")]: {
         display: "flex",
       },
+    },
+    headerProfileMenu: {
+      boxShadow: "0px 2px 30px 0px #0D345110",
     },
   })
 );
