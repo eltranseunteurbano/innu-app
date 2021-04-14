@@ -8,11 +8,6 @@ import {
   ButtonBase,
   Menu,
   MenuItem,
-  Paper,
-  MenuList,
-  Popper,
-  Grow,
-  ClickAwayListener,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
@@ -94,9 +89,6 @@ const useStyles = makeStyles((theme) =>
       paddingLeft: theme.spacing(1),
       boxSizing: "border-box",
       backgroundColor: theme.palette.clearGrey.main,
-    },
-    rootSticky: {
-      padding: theme.spacing(0, 1),
     },
     nav: {
       width: "100%",

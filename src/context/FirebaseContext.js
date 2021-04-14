@@ -15,15 +15,15 @@ const initialContext = {
 export const FirebaseContext = React.createContext(initialContext);
 
 export const FirebaseProvider = ({ children }) => {
-  const [state, setState] = React.useState(initialValues);
-  const [user, setUser] = React.useState({});
+  // const [state, setState] = React.useState(initialValues);
+  // const [user, setUser] = React.useState({});
 
-  const value = React.useMemo(() => ({ state, user, setState, setUser }), [
-    state,
-    user,
-    setState,
-    setUser,
-  ]);
+  // const value = React.useMemo(() => ({ state, user, setState, setUser }), [
+  //   state,
+  //   user,
+  //   setState,
+  //   setUser,
+  // ]);
 
   return (
     <FirebaseProvider.Provider value={initialContext}>

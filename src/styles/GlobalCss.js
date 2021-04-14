@@ -10,6 +10,26 @@ const GlobalCss = withStyles(() =>
         padding: 0,
         transition: "all .4s",
       },
+      "::-webkit-scrollbar": {
+        width: 8,
+        height: 8,
+      },
+      /* Track */
+      "::-webkit-scrollbar-track": {
+        background: "#F3F4FB",
+      },
+      /* Handle */
+      "::-webkit-scrollbar-thumb": {
+        background: "#dfe0e6",
+        borderRadius: "8px",
+      },
+      /* Handle on hover */
+      "::-webkit-scrollbar-thumb:hover": {
+        background: "#d7d8dc",
+      },
+      body: {
+        backgroundColor: "#F3F4FB",
+      },
       // bootstrap like spacing helpers (mt-3, pl-5, etc...)
       ...getSpacingHelpers(customTheme),
     },
