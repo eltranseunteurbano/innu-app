@@ -4,11 +4,11 @@ import customTheme from "../styles/theme";
 import GlobalCss from "../styles/GlobalCss";
 import "moment/locale/es";
 import Validator from "validatorjs";
-// import Header from "../components/Header/Header";
+import Header from "../components/Header/Header";
 import Login from "../containers/Auth/Login";
 import AppRoute from "./AppRoute";
 import Error404 from "../containers/Error404/Error404";
-import { LOGIN, APP, ERROR } from "./Routes";
+import { LOGIN, APP, ERROR, HOME } from "./Routes";
 
 function App() {
   Validator.useLang("es");
@@ -17,13 +17,18 @@ function App() {
     <ThemeProvider theme={customTheme}>
       <GlobalCss />
       <Router>
-        {/* <Header /> */}
         <Switch>
           <Route path={LOGIN} exact component={Login} />
           <Route path={ERROR} exact component={Error404} />
+          <Route path={HOME} exact>
+            <>
+              <Header />
+              <p>Landing page</p>
+            </>
+          </Route>
         </Switch>
         <Switch>
-          <Route path={APP} exact component={AppRoute} />
+          <Route path={APP} component={AppRoute} />
         </Switch>
       </Router>
     </ThemeProvider>

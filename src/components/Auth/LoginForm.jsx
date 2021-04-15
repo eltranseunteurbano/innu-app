@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import {
   Container,
@@ -15,16 +15,13 @@ import FormikTextField from "../../components/Formik/FormikTextField";
 import Button from "../../components/Button/Button";
 import useLogin from "./useLogin";
 import { Link } from "react-router-dom";
-import { FirebaseContext } from "../../context/FirebaseContext";
+import { HOME } from "../../Routes/Routes";
 
 const LoginForm = () => {
   const classes = useStyles();
   const theme = useTheme();
   const { formik } = useLogin();
   const [showPassword, setShowPassword] = React.useState(false);
-
-  const contexto = useContext(FirebaseContext);
-  console.log(contexto);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -81,7 +78,7 @@ const LoginForm = () => {
       </Link>
 
       <Divider className="my-3" style={{ width: "100%" }} />
-      <Button fullWidth component={Link} variant="outlined">
+      <Button fullWidth component={Link} variant="outlined" to={HOME}>
         Crear Organización
       </Button>
     </Container>

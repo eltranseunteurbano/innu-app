@@ -27,9 +27,6 @@ const GlobalCss = withStyles(() =>
       "::-webkit-scrollbar-thumb:hover": {
         background: "#d7d8dc",
       },
-      body: {
-        backgroundColor: "#F3F4FB",
-      },
       // bootstrap like spacing helpers (mt-3, pl-5, etc...)
       ...getSpacingHelpers(customTheme),
     },

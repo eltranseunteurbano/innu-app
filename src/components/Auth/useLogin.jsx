@@ -1,5 +1,7 @@
 import { useFormik } from "formik";
 import { getFormikValidator } from "../../utils/getFormikValidator";
+import { useHistory } from "react-router-dom";
+import { APP } from "../../Routes/Routes";
 
 const initialValues = {
   email: "",
@@ -17,10 +19,13 @@ const customMessages = {
 };
 
 const useLogin = () => {
+  const history = useHistory();
   const formik = useFormik({
     initialValues,
     validate: getFormikValidator(rules, undefined, undefined, customMessages),
-    onSubmit: (email, password) => {},
+    onSubmit: (email, password) => {
+      history.push(APP);
+    },
   });
 
   return {

@@ -25,7 +25,7 @@ const CompareScores = () => {
       </Box>
       <Box style={{ width: "100%", overflow: "overlay" }}>
         <Table>
-          <TableHead>
+          <TableHead style={{ position: "sticky", top: 0 }}>
             <TableRow>
               <TableCell style={{ padding: 0 }} />
               <TableCell className={classes.HeaderCell}>

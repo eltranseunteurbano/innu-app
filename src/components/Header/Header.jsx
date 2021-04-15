@@ -8,40 +8,43 @@ import cn from "classnames";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <StickyContainer>
-      <Sticky>
-        {({ style, distanceFromTop }) => {
-          return (
-            <header
-              className={cn(
-                classes.root,
-                distanceFromTop < 0 && classes.rootSticky
-              )}
-              style={{ ...style, top: 0 }}
-            >
-              <Logo />
-              <nav>
-                <IconButton className={classes.respMenu}>
-                  <MenuOutlinedIcon />
-                </IconButton>
+    <>
+      <StickyContainer>
+        <Sticky>
+          {({ style, distanceFromTop }) => {
+            return (
+              <header
+                className={cn(
+                  classes.root,
+                  distanceFromTop < -180 && classes.rootSticky
+                )}
+                style={{ ...style, top: 0 }}
+              >
+                <Logo />
+                <nav>
+                  <IconButton className={classes.respMenu}>
+                    <MenuOutlinedIcon />
+                  </IconButton>
 
-                <Button
-                  variant="text"
-                  className={classes.menuItem}
-                  component={Link}
-                >
-                  Ayuda
-                </Button>
-              </nav>
-            </header>
-          );
-        }}
-      </Sticky>
-    </StickyContainer>
+                  <Button
+                    variant="text"
+                    className={classes.menuItem}
+                    component={Link}
+                  >
+                    Ayuda
+                  </Button>
+                </nav>
+              </header>
+            );
+          }}
+        </Sticky>
+      </StickyContainer>
+      {children}
+    </>
   );
 };
 

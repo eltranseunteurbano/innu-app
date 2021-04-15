@@ -1,12 +1,63 @@
 import React from "react";
-import { Drawer, IconButton, Box, MenuList, MenuItem } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { CloseRounded as CloseRoundedIcon } from "@material-ui/icons";
+import {
+  Drawer,
+  IconButton,
+  Box,
+  MenuList,
+  MenuItem,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  Collapse,
+} from "@material-ui/core";
+import { makeStyles, createStyles, darken } from "@material-ui/core/styles";
+import {
+  CloseRounded as CloseRoundedIcon,
+  ExpandMoreRounded as ExpandMoreRoundedIcon,
+} from "@material-ui/icons";
 import cn from "classnames";
 import Logo from "../../assets/icons/Logo";
+import { APP, QUIZ, APP_DETAILS, QUIZ_RESULTADOS } from "../../Routes/Routes";
+import { useHistory } from "react-router";
 
 const DrawerMenu = ({ open, onClose }) => {
   const classes = useStyles();
+  const history = useHistory();
+  const [expanded, setExpanded] = React.useState("Dashboard");
+
+  const onNavigation = (route) => () => {
+    history.push(route);
+    onClose();
+  };
+
+  const onChangeAccordion = (accordion) => () => {
+    setExpanded(accordion);
+  };
+
+  const user = { rol: "gestor" };
+
+  const ItemsDrawer = [
+    {
+      title: "Dashboard",
+      items: [
+        { name: "Dashboard general", route: APP },
+        { name: "Dashboard detallado", route: `${APP}${APP_DETAILS}` },
+      ],
+      roles: ["colaborador", "gestor", "administrativo"],
+    },
+    {
+      title: "Cuestionario",
+      items: [
+        { name: "Resolver cuestionario", route: `${APP}${QUIZ}` },
+        {
+          name: "Resultados del ultimo cuestionario",
+          route: `${APP}${QUIZ}${QUIZ_RESULTADOS}`,
+        },
+      ],
+      roles: ["colaborador", "gestor"],
+    },
+  ];
 
   return (
     <Drawer
@@ -23,11 +74,58 @@ const DrawerMenu = ({ open, onClose }) => {
         </IconButton>
         <Logo className={classes.navLogo} />
       </Box>
-      <MenuList>
-        <MenuItem className={classes.menuItem}>Dashboard</MenuItem>
-        <MenuItem className={classes.menuItem}>Encuesta</MenuItem>
-        <MenuItem className={classes.menuItem}>Glosario</MenuItem>
-      </MenuList>
+      {ItemsDrawer.map(({ title, items, roles, ...others }, i) => {
+        const isShow = !!roles.find((rol) => rol === user.rol);
+        return (
+          <Collapse in={isShow}>
+            <Accordion
+              square
+              key={i}
+              expanded={expanded === title}
+              onChange={onChangeAccordion(title)}
+              classes={{ root: classes.accordion, expanded: classes.expanded }}
+              {...others}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreRoundedIcon />}
+                classes={{
+                  root: classes.accordionSummary,
+                  expanded: classes.accordionSummaryExpanded,
+                  content: classes.accordionSummaryContent,
+                  expandIcon: classes.accordionSummaryIcon,
+                }}
+              >
+                <Typography
+                  className={cn(
+                    classes.accordionTitle,
+                    expanded === title && classes.accordionTitleExpand
+                  )}
+                >
+                  {title}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails
+                classes={{
+                  root: classes.detailsRoot,
+                }}
+              >
+                <MenuList className={classes.menuList}>
+                  {items.map(({ name, route, ...others }, i) => (
+                    <MenuItem
+                      className={classes.menuItem}
+                      onClick={onNavigation(route)}
+                      key={name}
+                      {...others}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </AccordionDetails>
+            </Accordion>
+          </Collapse>
+        );
+      })}
     </Drawer>
   );
 };
@@ -41,7 +139,7 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "transparent",
     },
     paper: {
-      width: "70%",
+      width: "80%",
       maxWidth: 400,
       backgroundColor: theme.palette.clearGrey.main,
       border: "none",
@@ -52,13 +150,60 @@ const useStyles = makeStyles((theme) =>
     btnResp: {
       color: theme.palette.red.main,
     },
-    menuItem: {
-      fontWeight: 600,
+    accordion: {
+      backgroundColor: theme.palette.clearGrey.main,
+      boxShadow: "none",
+    },
+    expanded: {
+      margin: "0 !important",
+    },
+    accordionSummary: {
+      borderBottom: `solid 1px ${theme.palette.midGrey.main}40`,
       transition: "all .4s",
-      "&:focus": {
+      backgroundColor: darken(theme.palette.clearGrey.main, 0.05),
+      "&:hover": {
+        backgroundColor: darken(theme.palette.clearGrey.main, 0.1),
+      },
+      "&.Mui-expanded": {
+        minHeight: theme.spacing(6),
+        height: theme.spacing(6),
+        borderBottom: "none",
         backgroundColor: theme.palette.deepGrey.main,
+        boxShadow: "0 1px 3px rgb(0 0 0 / 20%)",
+      },
+    },
+    accordionSummaryContent: {
+      ...theme.typography.subtitle1,
+      fontWeight: 600,
+      "&.Mui-expanded": {
+        margin: 0,
+      },
+    },
+    accordionSummaryIcon: {
+      "&.Mui-expanded": {
         color: theme.palette.white.main,
       },
+    },
+    accordionTitle: {
+      ...theme.typography.subtitle1,
+      fontWeight: 600,
+    },
+    accordionTitleExpand: {
+      color: theme.palette.white.main,
+    },
+    detailsRoot: {
+      backgroundColor: `${theme.palette.white.main}80`,
+      borderBottom: `solid 1px ${theme.palette.midGrey.main}40`,
+      padding: 0,
+    },
+    menuList: {
+      width: "100%",
+      padding: 0,
+    },
+    menuItem: {
+      padding: theme.spacing(2, 3),
+      boxSizing: "border-box",
+      borderBottom: `solid 1px ${theme.palette.midGrey.main}20`,
     },
   })
 );

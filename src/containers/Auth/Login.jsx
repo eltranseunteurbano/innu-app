@@ -2,33 +2,37 @@ import React from "react";
 import { Container, Typography, Box } from "@material-ui/core";
 import LoginForm from "../../components/Auth/LoginForm";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import Header from "../../components/Header/Header";
 
 const Login = () => {
   const classes = useStyles();
   const theme = useTheme();
   return (
-    <Container disableGutters className={classes.root}>
-      <Container disableGutters maxWidth="sm" className={classes.header}>
-        <Box
-          style={{ minHeight: theme.spacing(7) }}
-          className={classes.contentDisappear}
-        />
-        <Box>
-          <Typography className={classes.headerTitle}>
-            Eleva tu organización
-          </Typography>
-          <Typography className={classes.headerText}>
-            Con INNU la innovación está mucho más cerca de lo que crees
-          </Typography>
-        </Box>
-        <img
-          src={process.env.PUBLIC_URL + "/img/rectangleColors.svg"}
-          alt="Imagen de decoración"
-          className={classes.contentDisappear}
-        />
+    <>
+      <Header />
+      <Container disableGutters className={classes.root}>
+        <Container disableGutters maxWidth="sm" className={classes.header}>
+          <Box
+            style={{ minHeight: theme.spacing(7) }}
+            className={classes.contentDisappear}
+          />
+          <Box>
+            <Typography className={classes.headerTitle}>
+              Eleva tu organización
+            </Typography>
+            <Typography className={classes.headerText}>
+              Con INNU la innovación está mucho más cerca de lo que crees
+            </Typography>
+          </Box>
+          <img
+            src={process.env.PUBLIC_URL + "/img/rectangleColors.svg"}
+            alt="Imagen de decoración"
+            className={classes.contentDisappear}
+          />
+        </Container>
+        <LoginForm />
       </Container>
-      <LoginForm />
-    </Container>
+    </>
   );
 };
 

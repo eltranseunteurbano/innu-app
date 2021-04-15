@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 import Barras from "../Graphics/BarSeries";
 

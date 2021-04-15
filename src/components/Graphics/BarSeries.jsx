@@ -8,12 +8,14 @@ import {
   ArgumentAxis,
   ValueAxis,
   Legend,
+  Tooltip,
 } from "@devexpress/dx-react-chart-material-ui";
 import {
   Stack,
   Animation,
   ArgumentScale,
   ValueScale,
+  EventTracker,
 } from "@devexpress/dx-react-chart";
 import { scaleBand } from "@devexpress/dx-chart-core";
 import cn from "classnames";
@@ -60,6 +62,8 @@ const BarSeries = (props) => {
         itemComponent={LegendItem}
       />
       <Title text={title} textComponent={CustomTitle} />
+      <EventTracker />
+      <Tooltip />
       <Stack />
     </Chart>
   );

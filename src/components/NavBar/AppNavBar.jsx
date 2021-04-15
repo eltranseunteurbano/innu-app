@@ -17,8 +17,11 @@ import {
 import Logo from "../../assets/icons/Logo";
 import cn from "classnames";
 import DrawerMenu from "./DrawerMenu";
+import { useHistory } from "react-router";
+import { HOME } from "../../Routes/Routes";
 
 const AppNavBar = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [showMenu, setShowMenu] = React.useState(null);
@@ -72,7 +75,9 @@ const AppNavBar = () => {
             classes={{ paper: classes.headerProfileMenu }}
           >
             <MenuItem>Perfil</MenuItem>
-            <MenuItem>Cerrar sesión</MenuItem>
+            <MenuItem onClick={() => history.push(HOME)}>
+              Cerrar sesión
+            </MenuItem>
           </Menu>
         </nav>
       </header>
