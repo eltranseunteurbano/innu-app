@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Chart,
   BarSeries as Series,
@@ -22,12 +22,13 @@ import cn from "classnames";
 
 const BarSeries = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
   const { data, className, title = "Titulo de la gráfica" } = props;
+  const finalData = data.slice(-3).reverse();
+  const fields = finalData[0].ejeY.map((itemY) => itemY.field);
 
   return (
     <Chart
-      data={data.slice(-3).reverse()}
+      data={finalData}
       className={cn(classes.dataChart, classes.root, className)}
       height={300}
     >
@@ -36,24 +37,16 @@ const BarSeries = (props) => {
       <ValueAxis showTicks />
       <ValueScale />
 
-      <Series
-        name="Tus resultados"
-        valueField="results"
-        argumentField="date"
-        color={theme.palette.yellow.main}
-      />
-      <Series
-        name="Resultados de tu equipo"
-        valueField="team"
-        argumentField="date"
-        color={theme.palette.red.main}
-      />
-      <Series
-        name="Resultados de tu empresa"
-        valueField="company"
-        argumentField="date"
-        color={theme.palette.blue.main}
-      />
+      {fields.map((item, i) => (
+        <Series
+          name={finalData[0].ejeY[i].name}
+          valueField={item}
+          argumentField="ejeX"
+          color={finalData[0].ejeY[i].color}
+          key={item + i}
+        />
+      ))}
+
       <Animation />
       <Legend
         position="bottom"

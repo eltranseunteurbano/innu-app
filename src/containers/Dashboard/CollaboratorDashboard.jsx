@@ -4,14 +4,15 @@ import { Container } from "@material-ui/core";
 import UserCard from "../../components/Dashboard/UserCard";
 import CompareScores from "../../components/Dashboard/CompareScores";
 import LastMeasures from "../../components/Dashboard/LastMeasures";
+import { mediciones } from "../../data/lastMeasures";
 
 const CollaboratorDashboard = () => {
   const classes = useStyles();
 
   return (
-    <Container disableGutters className={classes.root} component="main">
+    <Container disableGutters className={classes.root}>
       <UserCard />
-      <LastMeasures />
+      <LastMeasures data={mediciones} />
       <CompareScores />
     </Container>
   );

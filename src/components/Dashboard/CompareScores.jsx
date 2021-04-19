@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import cn from "classnames";
 import TextField from "../TextField/TextField";
+import variables from "../../data/variables";
 
 const CompareScores = () => {
   const classes = useStyles();
@@ -43,7 +44,7 @@ const CompareScores = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataTable.map(({ color, name, med1, med2, id }) => (
+            {variables.map(({ color, name, med1, med2, id }) => (
               <TableRow key={id} hover>
                 <TableCell className={classes.tableColorContent}>
                   <Box
@@ -69,100 +70,6 @@ const CompareScores = () => {
     </Paper>
   );
 };
-
-const dataTable = [
-  {
-    id: 0,
-    name: "Estadistica de infraestructura",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#E80707",
-  },
-  {
-    id: 1,
-    name: "Estadistica de tecnología",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#E87707",
-  },
-  {
-    id: 2,
-    name: "Planificación",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#E8E807",
-  },
-  {
-    id: 3,
-    name: "Número de proyectos",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#22C322",
-  },
-  {
-    id: 4,
-    name: "Mercado",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#07CDE8",
-  },
-  {
-    id: 5,
-    name: "Comunicación",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#0777E8",
-  },
-  {
-    id: 6,
-    name: "Autonomía",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#7707E8",
-  },
-  {
-    id: 7,
-    name: "Interdisciplinareidad",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#E807E8",
-  },
-  {
-    id: 8,
-    name: "Retos estratégicos",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#77654B",
-  },
-  {
-    id: 9,
-    name: "Apoyo didáctico",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#E3E3E3",
-  },
-  {
-    id: 10,
-    name: "Creatividad",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#00997D",
-  },
-  {
-    id: 11,
-    name: "Competencias",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#A7A227",
-  },
-  {
-    id: 12,
-    name: "Cultura de riesgo",
-    med1: 1.5,
-    med2: 2.3,
-    color: "#2E4E94",
-  },
-];
 
 const useStyles = makeStyles((theme) =>
   createStyles({

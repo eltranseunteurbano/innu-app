@@ -112,7 +112,11 @@ const DrawerMenu = ({ open, onClose }) => {
                 <MenuList className={classes.menuList}>
                   {items.map(({ name, route, ...others }, i) => (
                     <MenuItem
-                      className={classes.menuItem}
+                      className={cn(
+                        classes.menuItem,
+                        history.location.pathname === route &&
+                          classes.menuItemSelected
+                      )}
                       onClick={onNavigation(route)}
                       key={name}
                       {...others}
@@ -173,7 +177,7 @@ const useStyles = makeStyles((theme) =>
       },
     },
     accordionSummaryContent: {
-      ...theme.typography.subtitle1,
+      ...theme.typography.h4,
       fontWeight: 600,
       "&.Mui-expanded": {
         margin: 0,
@@ -204,6 +208,10 @@ const useStyles = makeStyles((theme) =>
       padding: theme.spacing(2, 3),
       boxSizing: "border-box",
       borderBottom: `solid 1px ${theme.palette.midGrey.main}20`,
+      ...theme.typography.body1,
+    },
+    menuItemSelected: {
+      backgroundColor: `${darken(theme.palette.clearGrey.main, 0.1)}!important`,
     },
   })
 );

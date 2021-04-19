@@ -2,51 +2,13 @@ import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 import Barras from "../Graphics/BarSeries";
+import cn from 'classnames';
 
-const LastMeasures = () => {
+const LastMeasures = ({ data, className }) => {
   const classes = useStyles();
 
-  const data = [
-    {
-      date: "20/03/2020",
-      results: 3,
-      team: 4,
-      company: 5,
-    },
-    {
-      date: "20/04/2020",
-      results: 3,
-      team: 4,
-      company: 5,
-    },
-    {
-      date: "20/05/2020",
-      results: 3,
-      team: 4,
-      company: 5,
-    },
-    {
-      date: "20/06/2020",
-      results: 3,
-      team: 4,
-      company: 5,
-    },
-    {
-      date: "20/07/2020",
-      results: 3,
-      team: 4,
-      company: 5,
-    },
-    {
-      date: "20/08/2020",
-      results: 3,
-      team: 4,
-      company: 5,
-    },
-  ];
-
   return (
-    <Paper className={classes.root}>
+    <Paper className={cn(classes.root, className)}>
       <Barras title="Gráfico de cultura de innovación" data={data} />
     </Paper>
   );
