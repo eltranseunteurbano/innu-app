@@ -38,7 +38,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-sb": "build-storybook -s public",
-    "deploySB": "yarn build-sb && firebase deploy --only hosting storybook"
+    "deploySB": "yarn build-sb && firebase deploy --only hosting storybook",
+    "deploy": "yarn build && firebase deploy --only hosting app "
   },
   "eslintConfig": {
     "extends": [

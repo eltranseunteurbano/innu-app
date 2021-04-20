@@ -18,7 +18,7 @@ import {
 } from "@material-ui/icons";
 import cn from "classnames";
 import Logo from "../../assets/icons/Logo";
-import { APP, QUIZ, APP_DETAILS, QUIZ_RESULTADOS } from "../../Routes/Routes";
+import { APP, QUIZ, APP_DETAILS } from "../../Routes/Routes";
 import { useHistory } from "react-router";
 
 const DrawerMenu = ({ open, onClose }) => {
@@ -50,10 +50,6 @@ const DrawerMenu = ({ open, onClose }) => {
       title: "Cuestionario",
       items: [
         { name: "Resolver cuestionario", route: `${APP}${QUIZ}` },
-        {
-          name: "Resultados del ultimo cuestionario",
-          route: `${APP}${QUIZ}${QUIZ_RESULTADOS}`,
-        },
       ],
       roles: ["colaborador", "gestor"],
     },
@@ -77,10 +73,9 @@ const DrawerMenu = ({ open, onClose }) => {
       {ItemsDrawer.map(({ title, items, roles, ...others }, i) => {
         const isShow = !!roles.find((rol) => rol === user.rol);
         return (
-          <Collapse in={isShow}>
+          <Collapse in={isShow} key={i} >
             <Accordion
               square
-              key={i}
               expanded={expanded === title}
               onChange={onChangeAccordion(title)}
               classes={{ root: classes.accordion, expanded: classes.expanded }}
@@ -164,9 +159,9 @@ const useStyles = makeStyles((theme) =>
     accordionSummary: {
       borderBottom: `solid 1px ${theme.palette.midGrey.main}40`,
       transition: "all .4s",
-      backgroundColor: darken(theme.palette.clearGrey.main, 0.05),
+      backgroundColor: theme.palette.clearGrey.main,
       "&:hover": {
-        backgroundColor: darken(theme.palette.clearGrey.main, 0.1),
+        backgroundColor: darken(theme.palette.clearGrey.main, 0.05),
       },
       "&.Mui-expanded": {
         minHeight: theme.spacing(6),
@@ -211,7 +206,9 @@ const useStyles = makeStyles((theme) =>
       ...theme.typography.body1,
     },
     menuItemSelected: {
-      backgroundColor: `${darken(theme.palette.clearGrey.main, 0.1)}!important`,
+      backgroundColor: `${theme.palette.sky.main}!important`,
+      fontWeight: 600,
+      color: theme.palette.blue.main,
     },
   })
 );
