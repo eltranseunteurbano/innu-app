@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Card, Container, Typography, Box, Stepper, Step, StepLabel, StepConnector, FormControl, FormGroup, FormLabel, FormControlLabel, Checkbox, Paper } from "@material-ui/core";
+import { Card, Container, Typography, Box, FormControl, FormGroup, FormLabel, FormControlLabel, Checkbox, Paper } from "@material-ui/core";
 import Button from '../../components/Button/Button';
 import cn from 'classnames';
 import { ToggleButtonGroup, ToggleButton  } from '@material-ui/lab';
@@ -37,17 +37,11 @@ const Quiz = () => {
         <Box style={{width: '100%'}}>
           <Typography className={classes.nameVariable}>Nombre de la variable</Typography>
           <Typography className={classes.progressBarTitle}>Progreso General</Typography>
-          <Stepper activeStep={3} connector={<CustomConnector />} className={classes.progressBar}>
-            {
-              questions.map((item) => 
-                <Step key={item + 'answer'} classes={{ root: classes.stepClear}}>
-                  <StepLabel StepIconComponent={CustomIcon} classes={{ iconContainer: classes.stepClear }} />
-                </Step>
-              )
-            }
-          </Stepper>
+          <Box className={classes.progressBar} >
+            <Box className={classes.progressBarContent} style={{width: '40%'}} />
+          </Box>
         </Box>
-        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+        <Box className={classes.questionBox} >
           <Typography className={classes.escala}>En una escala del 1 al 5</Typography>
           <Typography className={classes.question}>¿Cómo te sientes el día de hoy?</Typography>
           <ToggleButtonGroup exclusive value={answer} onChange={onHandleChangeAnswer} >
@@ -82,23 +76,6 @@ const Quiz = () => {
   );
 };
 
-const CustomIcon = ({ active, completed }) => {
-  const classes = useStyles();
-
-  return (
-    <Box
-      className={cn(classes.step, active && classes.activeStep, completed && classes.completedStep)} />
-  )
-}
-
-const CustomConnector = ({ active, completed }) => {
-  const classes = useStyles();
-
-  return (
-    <StepConnector className={cn( classes.connector, completed && classes.completedConnector, active && classes.completedConnector )}/>
-  )
-}
-
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -106,10 +83,13 @@ const useStyles = makeStyles((theme) =>
       height: 'fit-content',
       minHeight: "calc(100vh - 80px)",
       display: 'grid',
-      gridTemplateColumns: '4fr minmax(auto, 1fr)',
+      gridTemplateColumns: '1fr',
       columnGap: theme.spacing(2),
+      padding: theme.spacing(2),
+      boxSizing: 'border-box',
       [theme.breakpoints.up("sm")]: {
         padding: theme.spacing(3),
+        gridTemplateColumns: '4fr minmax(auto, 1fr)',
       },
     },
     card: {
@@ -127,13 +107,27 @@ const useStyles = makeStyles((theme) =>
         padding: theme.spacing(3),
       },
     },
+    questionBox: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     nameVariable: {
       ...theme.typography.caption,
       color: theme.palette.mistGrey.main,
       marginBottom: theme.spacing(1),
     },
     progressBar: {
-      padding: theme.spacing(3, 0),
+      width: '100%',
+      borderRadius: theme.spacing(1),
+      height: theme.spacing(1),
+      backgroundColor: theme.palette.rose.main,
+      overflow: 'hidden',
+    },
+    progressBarContent: {
+      backgroundColor: theme.palette.red.main,
+      height: '100%',
     },
     progressBarTitle: {
       ...theme.typography.body2,
@@ -141,55 +135,38 @@ const useStyles = makeStyles((theme) =>
       fontWeight: 700,
       textTransform: 'uppercase',
     },
-    stepClear:{
-      margin: 0,
-      padding: 0,
-    },
-    step: {
-      border: `solid 1px ${theme.palette.midGrey.main}`,
-      backgroundColor: `${theme.palette.midGrey.main}40`,
-      width: theme.spacing(1.5),
-      height: theme.spacing(1.5),
-      borderRadius: theme.spacing(1.5),
-    },
-    activeStep: {
-      border: `solid 1px ${theme.palette.red.main}`,
-      backgroundColor: `${theme.palette.red.main}40`,
-      boxShadow: `0px 0px 5px 0px ${theme.palette.red.main}`,
-    },
-    completedStep: {
-      backgroundColor: theme.palette.red.main,
-      border: 'transparent',
-    },
-    connector: {
-      borderColor: theme.palette.midGrey.main,
-    },
-    completedConnector: {
-      '& .MuiStepConnector-line': {
-        borderColor: theme.palette.red.main,
-      }
-    }, 
     escala: {
-      ...theme.typography.subtitle1,
+      ...theme.typography.subtitle2,
       color: theme.palette.midGrey.main,
       textAlign: 'center',
       marginBottom: theme.spacing(1),
+      [theme.breakpoints.up("sm")]: {
+        ...theme.typography.subtitle1,
+      },
     },
     question: {
-      ...theme.typography.h4,
+      ...theme.typography.body1,
+      fontWeight: 700,
       color: theme.palette.black.main,
       textAlign: 'center',
       marginBottom: theme.spacing(3),
+      [theme.breakpoints.up("sm")]: {
+        ...theme.typography.h4,
+      },
     },
     toggleButton: {
-      padding: theme.spacing(3, 6),
+      padding: theme.spacing(1, 3),
       ...theme.typography.body1,
       backgroundColor: theme.palette.white.main,
       border: `solid 1px ${theme.palette.red.main}`,
       borderLeft: `solid 1px ${theme.palette.red.main} !important`,
       color: theme.palette.red.main,
       fontWeight: 700,
-      fontSize: '1.5rem', 
+      fontSize: '1rem', 
+      [theme.breakpoints.up("sm")]: {
+        padding: theme.spacing(3, 6),
+        fontSize: '1.5rem', 
+      },
     },
     toggleButtonSelected: {
       backgroundColor: `${theme.palette.rose.main} !important`,
