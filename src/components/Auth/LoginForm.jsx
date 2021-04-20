@@ -73,7 +73,7 @@ const LoginForm = () => {
           Ingresar
         </Button>
       </form>
-      <Link to="" className={classes.forgot}>
+      <Link  to={HOME} className={classes.forgot}>
         ¿Olvidaste tu contraseña?
       </Link>
 

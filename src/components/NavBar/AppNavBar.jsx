@@ -20,6 +20,7 @@ import DrawerMenu from "./DrawerMenu";
 import { useHistory } from "react-router";
 import { HOME } from "../../Routes/Routes";
 import { NavBarContext } from "../../context/NavBarContext";
+import useAuth from "../../hooks/useAuth";
 
 const AppNavBar = () => {
   const history = useHistory();
@@ -28,6 +29,8 @@ const AppNavBar = () => {
   const [showMenu, setShowMenu] = React.useState(null);
 
   const { title: titleNavbar } = React.useContext(NavBarContext)
+  const { logOut, user } = useAuth();
+  const { name, photo } = user;
 
   const onClose = () => {
     setShowDrawer(!showDrawer);
@@ -36,6 +39,11 @@ const AppNavBar = () => {
   const onShowMenu = (event) => {
     setShowMenu(event.currentTarget);
   };
+
+  const signOut = () => {
+    logOut();
+    history.push(HOME)
+  }
 
   return (
     <>
@@ -53,10 +61,10 @@ const AppNavBar = () => {
           <Typography className={classes.title}>{titleNavbar}</Typography>
           <ButtonBase className={classes.avatar} onClick={onShowMenu}>
             <Divider orientation="vertical" flexItem />
-            <Avatar variant="rounded" className={classes.btnAvatar}>
-              J
+            <Avatar variant="rounded" className={classes.btnAvatar} src={photo}>
+              {name[0]}
             </Avatar>
-            <Typography className={classes.btnText}>Jhon Diaz</Typography>
+            <Typography className={classes.btnText}>{name}</Typography>
             <ArrowDropDownRoundedIcon />
           </ButtonBase>
           <Menu
@@ -78,7 +86,7 @@ const AppNavBar = () => {
             classes={{ paper: classes.headerProfileMenu }}
           >
             <MenuItem>Perfil</MenuItem>
-            <MenuItem onClick={() => history.push(HOME)}>
+            <MenuItem onClick={signOut}>
               Cerrar sesión
             </MenuItem>
           </Menu>

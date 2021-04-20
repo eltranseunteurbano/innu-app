@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) =>
       columnGap: theme.spacing(2),
       padding: theme.spacing(2),
       boxSizing: 'border-box',
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("md")]: {
         padding: theme.spacing(3),
         gridTemplateColumns: '4fr minmax(auto, 1fr)',
       },
@@ -199,6 +199,8 @@ const useStyles = makeStyles((theme) =>
     },
     navigation: {
       display: 'none',
+      height: 'fit-content',
+      paddingBottom: 0,
       [theme.breakpoints.up("md")]: {
         display: 'block',
       },

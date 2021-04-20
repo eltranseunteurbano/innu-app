@@ -9,23 +9,26 @@ import {
 } from "@material-ui/core";
 import cn from "classnames";
 import MeasuresCard from "./MeasuresCard";
+import useAuth from "../../hooks/useAuth";
 
 const UserCard = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchMDQuery = useMediaQuery(theme.breakpoints.up("md"));
+  const { user } = useAuth();
 
+  if(!user) return null
   return (
     <>
       <Paper className={cn(classes.root)}>
         <Box className={classes.avatar}>
-          <Avatar className={classes.avatarImg} variant="rounded">
-            J
+          <Avatar className={classes.avatarImg} variant="rounded" src={user.photo}>
+            {user.name[0]}
           </Avatar>
           <Box>
-            <Typography className={classes.name}>Jhon Díaz</Typography>
+            <Typography className={classes.name}>{user.name}</Typography>
             <Typography className={classes.area}>
-              Departamento de Diseño
+              {user.team}
             </Typography>
           </Box>
         </Box>
