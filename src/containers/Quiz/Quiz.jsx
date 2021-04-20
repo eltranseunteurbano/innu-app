@@ -4,12 +4,20 @@ import { Card, Container, Typography, Box, FormControl, FormGroup, FormLabel, Fo
 import Button from '../../components/Button/Button';
 import cn from 'classnames';
 import { ToggleButtonGroup, ToggleButton  } from '@material-ui/lab';
+import { NavBarContext } from "../../context/NavBarContext";
 
 const Quiz = () => {
   const classes = useStyles();
   const [answer, setAnswer] = React.useState(null);
   const questions = [1,2,3,4,6,7,8,9,10,11,12,13,14,15]
   const [variablesState, setVariablesState ] = React.useState({});
+
+
+  const { onHandleChangeTite } = React.useContext(NavBarContext);
+
+  React.useEffect(() => {
+    onHandleChangeTite('Cuestionario')
+  }, [onHandleChangeTite]);
 
   const handleChange = (value, id) => {
     setVariablesState(prev => ({...prev, [id]: value}))

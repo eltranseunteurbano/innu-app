@@ -19,12 +19,15 @@ import cn from "classnames";
 import DrawerMenu from "./DrawerMenu";
 import { useHistory } from "react-router";
 import { HOME } from "../../Routes/Routes";
+import { NavBarContext } from "../../context/NavBarContext";
 
 const AppNavBar = () => {
   const history = useHistory();
   const classes = useStyles();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [showMenu, setShowMenu] = React.useState(null);
+
+  const { title: titleNavbar } = React.useContext(NavBarContext)
 
   const onClose = () => {
     setShowDrawer(!showDrawer);
@@ -47,7 +50,7 @@ const AppNavBar = () => {
             </IconButton>
             <Logo className={classes.navLogo} />
           </Box>
-          <Typography className={classes.title}>Dashboard</Typography>
+          <Typography className={classes.title}>{titleNavbar}</Typography>
           <ButtonBase className={classes.avatar} onClick={onShowMenu}>
             <Divider orientation="vertical" flexItem />
             <Avatar variant="rounded" className={classes.btnAvatar}>

@@ -5,9 +5,16 @@ import LastMeasures from "../../components/Dashboard/LastMeasures";
 import { mediciones, medicionesVariables } from "../../data/lastMeasures";
 import VariablesSelector from "../../components/Dashboard/VariablesSelector";
 import VariablesResultsCard from "../../components/Dashboard/VariablesResultsCard";
+import { NavBarContext } from "../../context/NavBarContext";
 
 const DashboardDetails = () => {
   const classes = useStyles();
+
+  const { onHandleChangeTite } = React.useContext(NavBarContext);
+
+  React.useEffect(() => {
+    onHandleChangeTite('Dashboard detalles')
+  }, [onHandleChangeTite]);
 
   return (
     <Container disableGutters className={classes.root}>

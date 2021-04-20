@@ -5,9 +5,16 @@ import UserCard from "../../components/Dashboard/UserCard";
 import CompareScores from "../../components/Dashboard/CompareScores";
 import LastMeasures from "../../components/Dashboard/LastMeasures";
 import { mediciones } from "../../data/lastMeasures";
+import { NavBarContext } from "../../context/NavBarContext";
 
 const CollaboratorDashboard = () => {
   const classes = useStyles();
+
+  const { onHandleChangeTite } = React.useContext(NavBarContext);
+
+  React.useEffect(() => {
+    onHandleChangeTite('Dashboard')
+  }, [onHandleChangeTite]);
 
   return (
     <Container disableGutters className={classes.root}>
