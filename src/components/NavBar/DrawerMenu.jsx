@@ -18,13 +18,18 @@ import {
 } from "@material-ui/icons";
 import cn from "classnames";
 import Logo from "../../assets/icons/Logo";
-import { APP, QUIZ, APP_DETAILS } from "../../Routes/Routes";
+import { APP, QUIZ, APP_DETAILS, APP_TEAMS } from "../../Routes/Routes";
 import { useHistory } from "react-router";
+import roles from '../../data/roles';
+import useAuth from "../../hooks/useAuth";
 
 const DrawerMenu = ({ open, onClose }) => {
   const classes = useStyles();
   const history = useHistory();
   const [expanded, setExpanded] = React.useState("Dashboard");
+  const { user } = useAuth();
+  // const { rol: userRol } = user;
+  const userRol = 'ADMIN'
 
   const onNavigation = (route) => () => {
     history.push(route);
@@ -35,23 +40,20 @@ const DrawerMenu = ({ open, onClose }) => {
     setExpanded(accordion);
   };
 
-  const user = { rol: "gestor" };
-
   const ItemsDrawer = [
     {
       title: "Dashboard",
       items: [
-        { name: "Dashboard general", route: APP },
-        { name: "Dashboard detallado", route: `${APP}${APP_DETAILS}` },
+        { name: "Dashboard general", route: APP, disabled: false, roles: [roles.gestor, roles.admin, roles.cola] },
+        { name: "Dashboard detallado", route: `${APP}${APP_DETAILS}`, disabled: false, roles: [roles.gestor, roles.admin, roles.cola] },
+        { name: 'Dashboard por equipos', route: `${APP}${APP_TEAMS}`, disabled: false, roles: [roles.gestor, roles.admin] },
       ],
-      roles: ["colaborador", "gestor", "administrativo"],
     },
     {
       title: "Cuestionario",
       items: [
-        { name: "Resolver cuestionario", route: `${APP}${QUIZ}` },
+        { name: "Resolver cuestionario", route: `${APP}${QUIZ}`, disabled: false, roles: [roles.gestor, roles.admin, roles.cola] },
       ],
-      roles: ["colaborador", "gestor"],
     },
   ];
 
@@ -70,59 +72,62 @@ const DrawerMenu = ({ open, onClose }) => {
         </IconButton>
         <Logo className={classes.navLogo} />
       </Box>
-      {ItemsDrawer.map(({ title, items, roles, ...others }, i) => {
-        const isShow = !!roles.find((rol) => rol === user.rol);
+      {ItemsDrawer.map(({ title, items, ...others }, i) => {
         return (
-          <Collapse in={isShow} key={i} >
-            <Accordion
-              square
-              expanded={expanded === title}
-              onChange={onChangeAccordion(title)}
-              classes={{ root: classes.accordion, expanded: classes.expanded }}
-              {...others}
+          <Accordion
+            key={i}
+            square
+            expanded={expanded === title}
+            onChange={onChangeAccordion(title)}
+            classes={{ root: classes.accordion, expanded: classes.expanded }}
+            {...others}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreRoundedIcon />}
+              classes={{
+                root: classes.accordionSummary,
+                expanded: classes.accordionSummaryExpanded,
+                content: classes.accordionSummaryContent,
+                expandIcon: classes.accordionSummaryIcon,
+              }}
             >
-              <AccordionSummary
-                expandIcon={<ExpandMoreRoundedIcon />}
-                classes={{
-                  root: classes.accordionSummary,
-                  expanded: classes.accordionSummaryExpanded,
-                  content: classes.accordionSummaryContent,
-                  expandIcon: classes.accordionSummaryIcon,
-                }}
+              <Typography
+                className={cn(
+                  classes.accordionTitle,
+                  expanded === title && classes.accordionTitleExpand
+                )}
               >
-                <Typography
-                  className={cn(
-                    classes.accordionTitle,
-                    expanded === title && classes.accordionTitleExpand
-                  )}
-                >
-                  {title}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails
-                classes={{
-                  root: classes.detailsRoot,
-                }}
-              >
-                <MenuList className={classes.menuList}>
-                  {items.map(({ name, route, ...others }, i) => (
-                    <MenuItem
-                      className={cn(
-                        classes.menuItem,
-                        history.location.pathname === route &&
-                          classes.menuItemSelected
-                      )}
-                      onClick={onNavigation(route)}
-                      key={name}
-                      {...others}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </AccordionDetails>
-            </Accordion>
-          </Collapse>
+                {title}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails
+              classes={{
+                root: classes.detailsRoot,
+              }}
+            >
+              <MenuList className={classes.menuList}>
+                {items.map(({ name, route, roles, disabled, ...others }, i) => {
+                  const isShow = !!roles.find((rol) => rol === userRol);
+                  return (
+                    <Collapse in={isShow}>
+                      <MenuItem
+                        className={cn(
+                          classes.menuItem,
+                          history.location.pathname === route &&
+                            classes.menuItemSelected
+                        )}
+                        disabled={disabled}
+                        onClick={onNavigation(route)}
+                        key={name}
+                        {...others}
+                      >
+                        {name}
+                      </MenuItem>
+                    </Collapse>
+                )})}
+              </MenuList>
+            </AccordionDetails>
+          </Accordion>
         );
       })}
     </Drawer>

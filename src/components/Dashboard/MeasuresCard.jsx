@@ -3,7 +3,7 @@ import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { Paper, Box, Typography, Tooltip, Zoom } from "@material-ui/core";
 import cn from "classnames";
 
-const MeasuresCard = ({ className }) => {
+const MeasuresCard = ({ className, isCompany }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -26,7 +26,7 @@ const MeasuresCard = ({ className }) => {
             </Typography>
           </Box>
         </Box>
-        <Box className={classes.measuresItem}>
+        {!isCompany && <Box className={classes.measuresItem}>
           <Typography className={classes.measuresItemTitle}>
             Ranking de Equipo
           </Typography>
@@ -41,7 +41,23 @@ const MeasuresCard = ({ className }) => {
               14 <span style={{ color: theme.palette.blue.main }}>/ 15</span>
             </Typography>
           </Box>
-        </Box>
+        </Box>}
+        {isCompany && <Box className={classes.measuresItem}>
+          <Typography className={classes.measuresItemTitle}>
+            Ranking de Empresas
+          </Typography>
+          <Box
+            className={cn(classes.measuresItemScore, "px-2")}
+            style={{ backgroundColor: theme.palette.sky.main }}
+          >
+            <Typography
+              className={classes.measuresItemScoreText}
+              style={{ color: theme.palette.midGrey.main }}
+            >
+              14 <span style={{ color: theme.palette.blue.main }}>/ +400</span>
+            </Typography>
+          </Box>
+        </Box>}
         <Tooltip
           title="Debilidad en Educación"
           arrow

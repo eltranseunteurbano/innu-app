@@ -1,141 +1,86 @@
 export const mediciones = [
   {
-    ejeX: "20/03/2020",
-    ejeY: [
-      {
-        name: "Tus resultados",
-        color: "#F5B840",
-        field: "own",
-      },
-      {
-        name: "Resultados de tu equipo",
-        color: "#FF5F21",
-        field: "team",
-      },
-      {
-        name: "Resultados de tu empresa",
-        color: "#2D75E1",
-        field: "company",
-      },
-    ],
+    name: "20/03/2020",
     own: 3,
     team: 4,
     company: 5,
+    colors: {
+      own: '#F5B840',
+      team: '#FF5F21',
+      company: '#2D75E1',
+    }
   },
   {
-    ejeX: "20/04/2020",
-    ejeY: [
-      {
-        name: "Tus resultados",
-        color: "#F5B840",
-        field: "own",
-      },
-      {
-        name: "Resultados de tu equipo",
-        color: "#FF5F21",
-        field: "team",
-      },
-      {
-        name: "Resultados de tu empresa",
-        color: "#2D75E1",
-        field: "company",
-      },
-    ],
+    name: "20/04/2020",
     own: 3,
     team: 4,
     company: 5,
+    colors: {
+      own: '#F5B840',
+      team: '#FF5F21',
+      company: '#2D75E1',
+    }
   },
   {
-    ejeX: "20/05/2020",
-    ejeY: [
-      {
-        name: "Tus resultados",
-        color: "#F5B840",
-        field: "own",
-      },
-      {
-        name: "Resultados de tu equipo",
-        color: "#FF5F21",
-        field: "team",
-      },
-      {
-        name: "Resultados de tu empresa",
-        color: "#2D75E1",
-        field: "company",
-      },
-    ],
+    name: "20/05/2020",
     own: 3,
     team: 4,
     company: 5,
+    colors: {
+      own: '#F5B840',
+      team: '#FF5F21',
+      company: '#2D75E1',
+    }
   },
   {
-    ejeX: "20/06/2020",
-    ejeY: [
-      {
-        name: "Tus resultados",
-        color: "#F5B840",
-        field: "own",
-      },
-      {
-        name: "Resultados de tu equipo",
-        color: "#FF5F21",
-        field: "team",
-      },
-      {
-        name: "Resultados de tu empresa",
-        color: "#2D75E1",
-        field: "company",
-      },
-    ],
-    own: 3,
+    name: "20/06/2020",
+    own: 1.3,
     team: 4,
     company: 5,
+    colors: {
+      own: '#F5B840',
+      team: '#FF5F21',
+      company: '#2D75E1',
+    }
   },
   {
-    ejeX: "20/07/2020",
-    ejeY: [
-      {
-        name: "Tus resultados",
-        color: "#F5B840",
-        field: "own",
-      },
-      {
-        name: "Resultados de tu equipo",
-        color: "#FF5F21",
-        field: "team",
-      },
-      {
-        name: "Resultados de tu empresa",
-        color: "#2D75E1",
-        field: "company",
-      },
-    ],
+    name: "20/07/2020",
     own: 3,
-    team: 4,
+    team: 4.3,
     company: 5,
+    colors: {
+      own: '#F5B840',
+      team: '#FF5F21',
+      company: '#2D75E1',
+    }
   },
   {
-    ejeX: "20/08/2020",
-    ejeY: [
-      {
-        name: "Tus resultados",
-        color: "#F5B840",
-        field: "own",
-      },
-      {
-        name: "Resultados de tu equipo",
-        color: "#FF5F21",
-        field: "team",
-      },
-      {
-        name: "Resultados de tu empresa",
-        color: "#2D75E1",
-        field: "company",
-      },
-    ],
+    name: "20/08/2020",
+    // ejeY: [
+    //   {
+    //     name: "Tus resultados",
+    //     color: "#F5B840",
+    //     field: "own",
+    //   },
+    //   {
+    //     name: "Resultados de tu equipo",
+    //     color: "#FF5F21",
+    //     field: "team",
+    //   },
+    //   {
+    //     name: "Resultados de tu empresa",
+    //     color: "#2D75E1",
+    //     field: "company",
+    //   },
+    // ],
     own: 3,
     team: 4,
     company: 5,
+    colors: {
+      own: '#F5B840',
+      team: '#FF5F21',
+      company: '#2D75E1',
+    }
   },
 ];
 

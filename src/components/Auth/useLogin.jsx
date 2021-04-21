@@ -21,12 +21,13 @@ const customMessages = {
 
 const useLogin = () => {
   const history = useHistory();
-  const { signInWithEmailAndPassword } = useAuth();
+  const { signInWithEmailAndPassword, createUserWithEmailAndPassword } = useAuth();
 
   const formik = useFormik({
     initialValues,
     validate: getFormikValidator(rules, undefined, undefined, customMessages),
     onSubmit: (email, password) => {
+      // createUserWithEmailAndPassword('Jaime Burbano', 'jaimeb@gmail.com', 'asdf1234')
       signInWithEmailAndPassword('jaimeb@gmail.com', 'asdf1234');
       history.push(APP);
     },

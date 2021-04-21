@@ -1,118 +1,140 @@
 import React from "react";
-import { Box, Typography } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-import {
-  Chart,
-  BarSeries as Series,
-  Title,
-  ArgumentAxis,
-  ValueAxis,
-  Legend,
-  Tooltip,
-} from "@devexpress/dx-react-chart-material-ui";
-import {
-  Stack,
-  Animation,
-  ArgumentScale,
-  ValueScale,
-  EventTracker,
-} from "@devexpress/dx-react-chart";
-import { scaleBand } from "@devexpress/dx-chart-core";
+import { Box, ButtonBase, Typography } from "@material-ui/core";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import cn from "classnames";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const BarSeries = (props) => {
   const classes = useStyles();
-  const { data, className, title = "Titulo de la gráfica" } = props;
+  const theme = useTheme();
+  const { data, className, title = "Titulo de la gráfica", callback, callbackTitle = 'Ver más' } = props;
   const finalData = data.slice(-3).reverse();
-  const fields = finalData[0].ejeY.map((itemY) => itemY.field);
 
   return (
-    <Chart
-      data={finalData}
-      className={cn(classes.dataChart, classes.root, className)}
-      height={300}
-    >
-      <ArgumentScale factory={scaleBand} />
-      <ArgumentAxis />
-      <ValueAxis showTicks />
-      <ValueScale />
-
-      {fields.map((item, i) => (
-        <Series
-          name={finalData[0].ejeY[i].name}
-          valueField={item}
-          argumentField="ejeX"
-          color={finalData[0].ejeY[i].color}
-          key={item + i}
-        />
-      ))}
-
-      <Animation />
-      <Legend
-        position="bottom"
-        rootComponent={LegendRoot}
-        labelComponent={LegendLabel}
-        itemComponent={LegendItem}
-      />
-      <Title text={title} textComponent={CustomTitle} />
-      <EventTracker />
-      <Tooltip />
-      <Stack />
-    </Chart>
+    <Box className={classes.root}>
+      <Box className={callback ? classes.header : classes.emptyheader}>
+        <Box className={classes.emptyBox} style={{color: 'transparent'}}>{callbackTitle}</Box>
+        <Typography className={classes.title}>{title}</Typography>
+        {callback && <ButtonBase onClick={callback} className={classes.titleBtn}>{callbackTitle}</ButtonBase>}
+        {!callback && <Box className={classes.emptyBox} />}
+      </Box>
+    <ResponsiveContainer width="100%" className={cn(classes.chart, className)}>
+      <BarChart
+        data={finalData}
+      >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name"/>
+          <YAxis allowDecimals type="number" domain={[0, 5]}/>
+          <Tooltip filterNull
+            itemStyle={{ ...theme.typography.body2, padding: 0, textTransform: 'capitalize'}}
+            contentStyle={{ borderRadius: '8px' }}
+            labelStyle={{ ...theme.typography.body2, fontWeight: 600 }}
+            />
+          <Legend content={<CustomLegend />} verticalAlign="bottom" />
+          {
+            Object.keys(finalData[0]).map((item, index) => {
+              if(item === 'name' || item === 'colors') return undefined
+              return(
+                <Bar key={item + index} dataKey={item} fill={Object.values(finalData[0].colors)[index - 1]} />
+              )
+            })
+          }
+        </BarChart>
+      </ResponsiveContainer>
+    </Box>
   );
 };
 
-const LegendRoot = ({ children }) => {
+const CustomLegend = (props) => {
+  const { payload } = props;
   const classes = useStyles();
-  return <Box className={classes.legendContent}>{children}</Box>;
-};
 
-const LegendItem = ({ children }) => {
-  const classes = useStyles();
-  return <Box className={classes.legendItem}>{children}</Box>;
-};
+  return(
+    <Box className={classes.legendContent}>
+      {
+        payload.map((entry) => {
+          let legendName = legenCustomLabel(entry.value);
+          return (
+          <Box className={classes.legendItem}>
+            <Box style={{ backgroundColor: entry.color, width: '8px', height: '8px', borderRadius: '8px'}}/>
+            <Typography className={classes.label}>{legendName}</Typography>
+          </Box>
+        )})
+      }
+    </Box>
+  )
 
-const LegendLabel = ({ text }) => {
-  const classes = useStyles();
-  return <Typography className={classes.label}>{text}</Typography>;
-};
+}
 
-const CustomTitle = ({ text }) => {
-  const classes = useStyles();
-  return <Typography className={classes.title}>{text}</Typography>;
-};
+const legenCustomLabel = (value) => {
+  switch(value){
+    case 'own':
+      return 'Tus resultados';
+    
+    case 'team':
+      return 'Resultados de tu equipo';
+
+    case 'company':
+      return 'Resultados de tu empresa';
+
+    default:
+      return ''
+  }
+}
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      "& .Component-root-204": {
-        strokeDasharray: 3,
-      },
-      "& .Component-root-66": {
-        ...theme.typography.overline,
-      },
-      "& #top-container": {
-        justifyContent: "center",
-      },
+      width: '100%',
+    },
+    chart: {
+      width: '100%',
+      height: '300px !important',
+      marginLeft: theme.spacing(-2.5),
+      '& tspan': {
+        ...theme.typography.body2,
+      }
+    },
+    header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: theme.spacing(2),
+      [theme.breakpoints.up('sm')]:{
+        marginBottom: theme.spacing(4),
+      }
+    },
+    emptyheader: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: theme.spacing(2),
+      [theme.breakpoints.up('sm')]:{
+        marginBottom: theme.spacing(4),
+      }
+    },
+    emptyBox:{
+      display: 'block',
+    },
+    title: {
+      ...theme.typography.subtitle1,
+    },
+    titleBtn: {
+      ...theme.typography.body2,
+      color: theme.palette.blue.main,
     },
     dataChart: {
       width: "100%",
       boxSizing: "border-box",
       padding: 0,
     },
-    title: {
-      ...theme.typography.subtitle1,
-      margin: theme.spacing(1, 0, 2),
-      textAlign: "center",
-    },
     legendContent: {
       display: "flex",
       flexDirection: "column",
-      alignItems: "flex-start",
+      alignItems: "center",
       justifyContent: "center",
       width: "100%",
-      margin: theme.spacing(2, 0),
-      rowGap: theme.spacing(1),
+      rowGap: theme.spacing(0.5),
       [theme.breakpoints.up("sm")]: {
         flexDirection: "row",
         alignItems: "center",
@@ -132,6 +154,9 @@ const useStyles = makeStyles((theme) =>
     LabelArgument: {
       ...theme.typography.overline,
     },
+    Tooltip: {
+      background: 'red',
+    }
   })
 );
 

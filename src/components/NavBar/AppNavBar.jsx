@@ -30,7 +30,7 @@ const AppNavBar = () => {
 
   const { title: titleNavbar } = React.useContext(NavBarContext)
   const { logOut, user } = useAuth();
-  const { name, photo } = user;
+  // const { name, photo } = user;
 
   const onClose = () => {
     setShowDrawer(!showDrawer);
@@ -61,10 +61,10 @@ const AppNavBar = () => {
           <Typography className={classes.title}>{titleNavbar}</Typography>
           <ButtonBase className={classes.avatar} onClick={onShowMenu}>
             <Divider orientation="vertical" flexItem />
-            <Avatar variant="rounded" className={classes.btnAvatar} src={photo}>
-              {name[0]}
+            <Avatar variant="rounded" className={classes.btnAvatar} src={''}>
+              {/* {name[0]} */}H
             </Avatar>
-            <Typography className={classes.btnText}>{name}</Typography>
+            <Typography className={classes.btnText}>ASD</Typography>
             <ArrowDropDownRoundedIcon />
           </ButtonBase>
           <Menu
@@ -86,7 +86,8 @@ const AppNavBar = () => {
             classes={{ paper: classes.headerProfileMenu }}
           >
             <MenuItem>Perfil</MenuItem>
-            <MenuItem onClick={signOut}>
+            {/* <MenuItem onClick={signOut}> */}
+            <MenuItem>
               Cerrar sesión
             </MenuItem>
           </Menu>

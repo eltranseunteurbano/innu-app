@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { Container, Dialog, useMediaQuery } from "@material-ui/core";
 import LastMeasures from "../../components/Dashboard/LastMeasures";
 import { mediciones, medicionesVariables } from "../../data/lastMeasures";
 import VariablesSelector from "../../components/Dashboard/VariablesSelector";
@@ -9,8 +9,15 @@ import { NavBarContext } from "../../context/NavBarContext";
 
 const DashboardDetails = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const matchMD = useMediaQuery(theme.breakpoints.up('md'));
 
+  const [showAdditionalInfo, setShowAdditionalInfo] = React.useState(false);
   const { onHandleChangeTite } = React.useContext(NavBarContext);
+
+  const onHandleChangeAdditionalInfo = () => {
+    setShowAdditionalInfo(!showAdditionalInfo);
+  }
 
   React.useEffect(() => {
     onHandleChangeTite('Dashboard detalles')
@@ -18,10 +25,14 @@ const DashboardDetails = () => {
 
   return (
     <Container disableGutters className={classes.root}>
-      <LastMeasures data={mediciones} className={classes.charts}/>
-      <VariablesSelector data={medicionesVariables} className={classes.selector} />
+      <LastMeasures data={mediciones} className={classes.charts} callback={!matchMD ? onHandleChangeAdditionalInfo : null} callbackTitle="Ver Variables"/>
+      { matchMD && <VariablesSelector data={medicionesVariables} className={classes.selector} />}
       <VariablesResultsCard subtitle="Mis resultados" data={medicionesVariables} className={classes.firstResults} />
       <VariablesResultsCard subtitle="Resultados del equipo" data={medicionesVariables} className={classes.secondResults} />
+
+      <Dialog open={showAdditionalInfo} onClose={onHandleChangeAdditionalInfo}>
+      <VariablesSelector data={medicionesVariables} className={classes.selector} />
+      </Dialog>
     </Container>
   );
 };
@@ -54,7 +65,6 @@ const useStyles = makeStyles((theme) =>
       },
     },
     selector: {
-      display: 'none',
       [theme.breakpoints.up("md")]: {
         gridRowStart: 1,
         gridRowEnd: 3,

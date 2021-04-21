@@ -21,18 +21,21 @@ export const AuthProvider = ({ children }) => {
 
   const getDataUser = useCallback((id) => {
     firebase.firestore().collection('users').doc(id).get().then((doc) => {
-      if(doc.exists){
-        setUser(doc.data());
-        setLoadingAuthState(false);
-      } else {
-        console.log("%cNo existe el documento", "background-color: #FF5F21; color: white; padding: 4px 8px;");      }
+      if(!!currentUser){
+        if(doc.exists){
+          setUser(doc.data());
+          setLoadingAuthState(false);
+        } else {
+          console.log("%cNo existe el documento", "background-color: #FF5F21; color: white; padding: 4px 8px;");
+        }
+      }
     })
-  }, [])
+  }, [currentUser])
     
   useEffect(() => {
     firebase.auth().onAuthStateChanged((userTemp) => {
-      setCurrentUser(userTemp);
       if(!!userTemp) {
+        setCurrentUser(userTemp);
         getDataUser(userTemp.uid);
       } else {
         setUser(null);
