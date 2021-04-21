@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Logo = ({ className }) => {
+const Logo = ({ className, onClick }) => {
   return (
     <svg
       className={className}
+      onClick={onClick}
       width="91"
       height="16"
       viewBox="0 0 91 16"
