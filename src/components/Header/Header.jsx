@@ -1,8 +1,8 @@
 import React from "react";
-import { IconButton } from "@material-ui/core";
+// import { IconButton } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Logo from "../../assets/icons/Logo";
-import { MenuOutlined as MenuOutlinedIcon } from "@material-ui/icons";
+// import { MenuOutlined as MenuOutlinedIcon } from "@material-ui/icons";
 import cn from "classnames";
 import Button from "../Button/Button";
 import { Link, useHistory } from "react-router-dom";
@@ -29,9 +29,9 @@ const Header = ({ backgroundColor = '#ffffff' }) => {
     >
       <Logo onClick={() => history.push(HOME)} className={classes.logo}/>
       <nav>
-        <IconButton className={classes.respMenu}>
+        {/* <IconButton className={classes.respMenu}>
           <MenuOutlinedIcon />
-        </IconButton>
+        </IconButton> */}
 
         <Button
           variant="text"
@@ -73,10 +73,7 @@ const useStyles = makeStyles((theme) =>
       },
     },
     menuItem: {
-      display: "none",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
-      },
+      display: "flex",
     },
     logo: {
       cursor: 'pointer',

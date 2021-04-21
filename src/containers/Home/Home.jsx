@@ -155,9 +155,11 @@ const useStyles = makeStyles((theme) =>
       },
       [theme.breakpoints.up('md')]: {
         ...theme.typography.xlarge,
+        paddingTop: theme.spacing(0),
       },
       [theme.breakpoints.up('lg')]: {
         ...theme.typography.xxlarge,
+        paddingTop: theme.spacing(0),
         maxWidth: '45%'
       }
     },
