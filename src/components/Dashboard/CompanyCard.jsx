@@ -9,20 +9,17 @@ import {
 } from "@material-ui/core";
 import cn from "classnames";
 import MeasuresCard from "./MeasuresCard";
-import useAuth from "../../hooks/useAuth";
 
 const CompanyCard = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchMDQuery = useMediaQuery(theme.breakpoints.up("md"));
-  const { user } = useAuth();
 
-  if(!user) return null
   return (
     <>
       <Paper className={cn(classes.root)}>
         <Box className={classes.avatar}>
-          <Avatar className={classes.avatarImg} variant="rounded" src={user.photo}>
+          <Avatar className={classes.avatarImg} variant="rounded" src="">
             I
           </Avatar>
           <Box>

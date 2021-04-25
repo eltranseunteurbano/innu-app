@@ -4,10 +4,11 @@ import { Chip } from "@material-ui/core";
 import { makeStyles, createStyles, lighten } from "@material-ui/core/styles";
 import cn from "classnames";
 
-const Chips = ({ className, label = "Label", color = "lavander" }) => {
+const Chips = ({ className, label = "Label", color = "lavander", ...props }) => {
   const classes = useStyles();
   return (
     <Chip
+      {...props}
       label={label}
       className={cn(classes.root, classes[color], className)}
     />
@@ -56,12 +57,18 @@ const useStyles = makeStyles((theme) =>
         backgroundColor: theme.palette.lavander.button,
       },
     },
+    white: {
+      backgroundColor: `${theme.palette.white.main}30`,
+      ...theme.typography.button,
+      color: theme.palette.white.main,
+      transition: "all .4s",
+    }
   })
 );
 
 Chips.propTypes = {
   label: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(["red", "blue", "esmerald", "lavander"]),
+  color: PropTypes.oneOf(["red", "blue", "esmerald", "lavander", 'white']),
   className: PropTypes.string,
 };
 

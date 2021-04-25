@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
 import CompanyCard from "../../components/Dashboard/CompanyCard";
 import { NavBarContext } from "../../context/NavBarContext";
-import TableTeamsPosition from "../../components/Dashboard/TableTeamsPosition";
+import TeamsCompared from "../../components/Dashboard/TeamsCompared";
 
 const DashboardTeam = () => {
   const classes = useStyles();
@@ -17,7 +17,7 @@ const DashboardTeam = () => {
   return (
     <Container disableGutters className={classes.root}>
       <CompanyCard />
-      <TableTeamsPosition />
+      <TeamsCompared />
     </Container>
   );
 };

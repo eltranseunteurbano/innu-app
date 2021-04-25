@@ -2,21 +2,21 @@ const variables = [
   {
     id: 0,
     name: "Estadistica de infraestructura",
-    med1: 1.5,
+    med1: 4,
     med2: 2.3,
     color: "#E80707",
   },
   {
     id: 1,
     name: "Estadistica de tecnología",
-    med1: 1.5,
+    med1: 5,
     med2: 2.3,
     color: "#E87707",
   },
   {
     id: 2,
     name: "Planificación",
-    med1: 1.5,
+    med1: 3.5,
     med2: 2.3,
     color: "#E8E807",
   },
@@ -58,7 +58,7 @@ const variables = [
   {
     id: 8,
     name: "Retos estratégicos",
-    med1: 1.5,
+    med1: 3.5,
     med2: 2.3,
     color: "#77654B",
   },
@@ -72,7 +72,7 @@ const variables = [
   {
     id: 10,
     name: "Creatividad",
-    med1: 1.5,
+    med1: 0,
     med2: 2.3,
     color: "#00997D",
   },

@@ -17,19 +17,19 @@ import {
 import Logo from "../../assets/icons/Logo";
 import cn from "classnames";
 import DrawerMenu from "./DrawerMenu";
-import { useHistory } from "react-router";
-import { HOME } from "../../Routes/Routes";
+// import { useHistory } from "react-router";
+// import { HOME } from "../../Routes/Routes";
 import { NavBarContext } from "../../context/NavBarContext";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 
 const AppNavBar = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const classes = useStyles();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [showMenu, setShowMenu] = React.useState(null);
 
   const { title: titleNavbar } = React.useContext(NavBarContext)
-  const { logOut, user } = useAuth();
+  // const { logOut } = useAuth();
   // const { name, photo } = user;
 
   const onClose = () => {
@@ -40,10 +40,10 @@ const AppNavBar = () => {
     setShowMenu(event.currentTarget);
   };
 
-  const signOut = () => {
-    logOut();
-    history.push(HOME)
-  }
+  // const signOut = () => {
+  //   logOut();
+  //   history.push(HOME)
+  // }
 
   return (
     <>

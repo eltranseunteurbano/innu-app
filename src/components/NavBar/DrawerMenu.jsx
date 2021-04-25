@@ -21,13 +21,13 @@ import Logo from "../../assets/icons/Logo";
 import { APP, QUIZ, APP_DETAILS, APP_TEAMS } from "../../Routes/Routes";
 import { useHistory } from "react-router";
 import roles from '../../data/roles';
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 
 const DrawerMenu = ({ open, onClose }) => {
   const classes = useStyles();
   const history = useHistory();
   const [expanded, setExpanded] = React.useState("Dashboard");
-  const { user } = useAuth();
+  // const { user } = useAuth();
   // const { rol: userRol } = user;
   const userRol = 'ADMIN'
 

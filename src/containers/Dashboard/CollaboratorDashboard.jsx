@@ -6,11 +6,13 @@ import CompareScores from "../../components/Dashboard/CompareScores";
 import LastMeasures from "../../components/Dashboard/LastMeasures";
 import { mediciones } from "../../data/lastMeasures";
 import { NavBarContext } from "../../context/NavBarContext";
+import TableTeamsPosition from "../../components/Dashboard/TableTeamsPosition";
 
 const CollaboratorDashboard = () => {
   const classes = useStyles();
 
   const { onHandleChangeTite } = React.useContext(NavBarContext);
+  const isCollaborator = false;
 
   React.useEffect(() => {
     onHandleChangeTite('Dashboard')
@@ -20,6 +22,7 @@ const CollaboratorDashboard = () => {
     <Container disableGutters className={classes.root}>
       <UserCard />
       <LastMeasures data={mediciones} />
+      { !isCollaborator && <TableTeamsPosition />}
       <CompareScores />
     </Container>
   );

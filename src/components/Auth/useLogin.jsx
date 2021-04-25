@@ -21,7 +21,7 @@ const customMessages = {
 
 const useLogin = () => {
   const history = useHistory();
-  const { signInWithEmailAndPassword, createUserWithEmailAndPassword } = useAuth();
+  const { signInWithEmailAndPassword } = useAuth();
 
   const formik = useFormik({
     initialValues,

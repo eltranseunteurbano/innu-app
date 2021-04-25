@@ -1,20 +1,20 @@
 import React from "react";
 import { useTheme } from "@material-ui/core";
-import { Switch, Route, useRouteMatch, Redirect } from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 import CollaboratorDashboard from "../containers/Dashboard/CollaboratorDashboard";
 import DashboardDetails from "../containers/Dashboard/DashboardDetails";
 import QuizContainer from '../containers/Quiz/Quiz';
-import { APP, APP_DETAILS, APP_TEAMS, QUIZ, LOGIN } from "../Routes/Routes";
+import { APP, APP_DETAILS, APP_TEAMS, QUIZ } from "../Routes/Routes";
 import { NavBarProvider } from "../context/NavBarContext";
-import { Backdrop, CircularProgress } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+// import { Backdrop, CircularProgress } from '@material-ui/core';
+// import { makeStyles } from '@material-ui/core/styles';
 import useAuth from "../hooks/useAuth";
 import DashboardTeam from "../containers/Dashboard/DashboardTeam";
 
 const AppRoute = () => {
   const { path } = useRouteMatch();
   const theme = useTheme();
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const { loadingAuthState, authenticated } = useAuth();
   console.log({loadingAuthState, authenticated})
@@ -45,11 +45,11 @@ const AppRoute = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   backdrop: {
+//     zIndex: theme.zIndex.drawer + 1,
+//     color: '#fff',
+//   },
+// }));
 
 export default AppRoute;
