@@ -5373,6 +5373,11 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
+cohere-js@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/cohere-js/-/cohere-js-1.0.10.tgz#a99552de5199ea6fcbc00d7abc5f1c37ca6d5d48"
+  integrity sha512-7udEsDAcIGCcizBxN2/IM1x0QO67S2YH1cGoiyzsKX8Xhzy4Kgmf/Z8Idxg3WBnYybiJd+CAz3/9OGdu7Lfa4Q==
+
 collapse-white-space@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-1.0.6.tgz#e63629c0016665792060dbbeb79c42239d2c5287"

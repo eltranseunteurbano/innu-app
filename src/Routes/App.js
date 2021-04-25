@@ -10,9 +10,11 @@ import AppRoute from "./AppRoute";
 import Error404 from "../containers/Error404/Error404";
 import { LOGIN, APP, ERROR, HOME } from "./Routes";
 import { AuthProvider } from "../context/AuthContext";
+import Cohere from 'cohere-js';
 
 function App() {
   Validator.useLang("es");
+  Cohere.init("QFh1Ruey7c4agzhOSNgzwDYm");
 
   return (
     <AuthProvider>

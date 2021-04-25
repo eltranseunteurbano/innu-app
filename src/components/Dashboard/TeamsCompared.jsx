@@ -62,14 +62,15 @@ const TeamsCompared = () => {
       />
       <Box className={classes.spiderBox}>
         {
-          teamsFiltered.map(({ id, title, values }, index) => (
+          teamsFiltered.map(({ id, title, values }, index) => 
             <SpiderChart
-              key={id}
               name={title}
               isSelected={comparedTeams.find(item => item === title)}
               onSelect={onChangeSelectedItems}
+              key={id}
+              className={title === 'Empresa' && classes.customSpiderChart }
             />
-          ))
+          )
         }
       </Box>
       
@@ -202,6 +203,10 @@ const useStyles = makeStyles((theme) =>
       flexWrap: 'wrap',
       gap: theme.spacing(2),
     },
+    customSpiderChart: {
+      order: '-1',
+      backgroundColor: `${theme.palette.clearGrey.main} !important`
+    }
   })
 );
 
@@ -240,5 +245,9 @@ const teams = [
     id: 7,
     title: 'Servicios',
     values: {}
-  },
+  }, {
+    id: 8,
+    title: 'Empresa',
+    values: {}
+  }
 ];

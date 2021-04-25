@@ -4,17 +4,47 @@ import { Typography, Card } from "@material-ui/core";
 import variables from '../../data/variables';
 import { Radar } from 'react-chartjs-2';
 import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
+import cn from 'classnames';
 
-
-const SpiderChart = ({ name, onSelect, isSelected }) => {
+const SpiderChart = ({ name, onSelect, isSelected, className }) => {
   const classes = useStyles();
   const theme = useTheme();
-
+  console.log(className)
   return (
-    <Card variant="outlined" className={classes.root}>
+    <Card variant="outlined" className={cn(classes.root, className)}>
       <Typography className={classes.title}>Variables de cultura de innovación</Typography>
       <Typography className={classes.team}>Resultados de: <strong style={{ color: theme.palette.red.main }}>{name}</strong></Typography>
-      <Radar data={data}/>
+      <Radar
+        data={data}
+        options={{
+          maintainAspectRatio: true,
+          animations: {
+            tension: {
+              duration: 1000,
+              easing: 'linear',
+              from: 1,
+              to: 0,
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+          },
+          elements: {
+            point: {
+              backgroundColor: theme.palette.red.main,
+              hoverBorderWidth: 4,
+              hoverRadius: 10,
+            },
+            line: {
+              borderWidth: 1,
+              borderColor: theme.palette.red.main,
+            },
+
+          }
+        }}
+        />
       <ToggleButtonGroup value={isSelected} exclusive onChange={(event, value) => onSelect(event, name) }>
         <ToggleButton classes={{root: classes.btn }} value={name}>Comparar</ToggleButton>
       </ToggleButtonGroup>
@@ -64,11 +94,9 @@ const data = {
   labels: variables.map((item) => item.name),
   datasets: [
     {
-      label: '# of Votes',
+      label: ' Valor de la variable',
       data: variables.map((item) => item.med1),
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1,
+      backgroundColor: '#FF5F2150',
     },
   ],
 };
