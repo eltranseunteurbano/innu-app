@@ -4,12 +4,14 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import CollaboratorDashboard from "../containers/Dashboard/CollaboratorDashboard";
 import DashboardDetails from "../containers/Dashboard/DashboardDetails";
 import QuizContainer from '../containers/Quiz/Quiz';
-import { APP, APP_DETAILS, APP_TEAMS, QUIZ } from "../Routes/Routes";
+import { APP, APP_DETAILS, APP_TEAMS, QUIZ, APP_TEAMS_COMPARAR, MEASURES } from "../Routes/Routes";
 import { NavBarProvider } from "../context/NavBarContext";
 // import { Backdrop, CircularProgress } from '@material-ui/core';
 // import { makeStyles } from '@material-ui/core/styles';
 import useAuth from "../hooks/useAuth";
 import DashboardTeam from "../containers/Dashboard/DashboardTeam";
+import CompararTeams from "../containers/Dashboard/CompararTeams";
+import Measures from "../containers/Measures/Measures";
 
 const AppRoute = () => {
   const { path } = useRouteMatch();
@@ -38,7 +40,9 @@ const AppRoute = () => {
             component={DashboardDetails}
           />
           <Route path={`${path}${APP_TEAMS}`} exact component={DashboardTeam} />
+          <Route path={`${path}${APP_TEAMS_COMPARAR}`} exact component={CompararTeams} />
           <Route path={`${path}${QUIZ}`} exact component={QuizContainer} />
+          <Route path={`${path}${MEASURES}`} exact component={Measures} />
         </Switch>
       </main>
     </NavBarProvider>

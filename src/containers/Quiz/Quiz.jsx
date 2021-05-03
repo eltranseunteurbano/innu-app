@@ -12,7 +12,6 @@ const Quiz = () => {
   const questions = [1,2,3,4,6,7,8,9,10,11,12,13,14,15]
   const [variablesState, setVariablesState ] = React.useState({});
 
-
   const { onHandleChangeTite } = React.useContext(NavBarContext);
 
   React.useEffect(() => {
@@ -41,31 +40,6 @@ const Quiz = () => {
 
   return (
     <Container disableGutters className={classes.root}>
-      <Card className={classes.card}>
-        <Box style={{width: '100%'}}>
-          <Typography className={classes.nameVariable}>Nombre de la variable</Typography>
-          <Typography className={classes.progressBarTitle}>Progreso General</Typography>
-          <Box className={classes.progressBar} >
-            <Box className={classes.progressBarContent} style={{width: '40%'}} />
-          </Box>
-        </Box>
-        <Box className={classes.questionBox} >
-          <Typography className={classes.escala}>En una escala del 1 al 5</Typography>
-          <Typography className={classes.question}>¿Cómo te sientes el día de hoy?</Typography>
-          <ToggleButtonGroup exclusive value={answer} onChange={onHandleChangeAnswer} >
-            {
-              [1,2,3,4,5].map((item) => 
-                <ToggleButton key={item + 'togglebutton'} value={item} classes={{ root: classes.toggleButton, selected: classes.toggleButtonSelected }}>{item}</ToggleButton>
-              )
-            }
-          </ToggleButtonGroup>
-        </Box>
-        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-          <Button className="mb-1">Continuar</Button>
-          <Button variant="text">VOLVER A LA PREGUNTA ANTERIOR</Button>
-        </Box>
-      </Card>
-    
       <FormControl className={cn(classes.card, classes.navigation, "px-0")}  style={{overflow: 'hidden'}} component={Paper}>
         <FormGroup  style={{width: '100%'}}>
           <FormLabel className={cn(classes.progressBarTitle, classes.customTitle)}>Cuestionario</FormLabel>
@@ -80,6 +54,30 @@ const Quiz = () => {
           }
         </ FormGroup>
       </FormControl>
+      <Card className={classes.card}>
+        <Box style={{width: '100%'}}>
+          <Typography className={classes.nameVariable}>Nombre de la variable</Typography>
+          <Typography className={classes.progressBarTitle}>Progreso General</Typography>
+          <Box className={classes.progressBar} >
+            <Box className={classes.progressBarContent} style={{width: '40%'}} />
+          </Box>
+        </Box>
+        <Box className={classes.questionBox} >
+          <Typography className={classes.escala}>En una escala del 1 al 5, <br /><strong>siendo 1 el más bajo y el 5 el más alto</strong></Typography>
+          <Typography className={classes.question}>¿Cómo te sientes el día de hoy?</Typography>
+          <ToggleButtonGroup exclusive value={answer} onChange={onHandleChangeAnswer} >
+            {
+              [1,2,3,4,5].map((item) => 
+                <ToggleButton key={item + 'togglebutton'} value={item} classes={{ root: classes.toggleButton, selected: classes.toggleButtonSelected }}>{item}</ToggleButton>
+              )
+            }
+          </ToggleButtonGroup>
+        </Box>
+        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+          <Button className="mb-1">Continuar</Button>
+          <Button variant="text">VOLVER A LA PREGUNTA ANTERIOR</Button>
+        </Box>
+      </Card>
     </Container>
   );
 };
@@ -97,7 +95,7 @@ const useStyles = makeStyles((theme) =>
       boxSizing: 'border-box',
       [theme.breakpoints.up("md")]: {
         padding: theme.spacing(3),
-        gridTemplateColumns: '4fr minmax(auto, 1fr)',
+        gridTemplateColumns: 'minmax(auto, 1fr) 4fr',
       },
     },
     card: {
@@ -147,10 +145,13 @@ const useStyles = makeStyles((theme) =>
       ...theme.typography.subtitle2,
       color: theme.palette.midGrey.main,
       textAlign: 'center',
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(2),
       [theme.breakpoints.up("sm")]: {
         ...theme.typography.subtitle1,
       },
+      '& strong': {
+        fontWeight: 400,
+      }
     },
     question: {
       ...theme.typography.body1,

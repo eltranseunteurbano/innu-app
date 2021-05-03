@@ -18,7 +18,7 @@ import {
 } from "@material-ui/icons";
 import cn from "classnames";
 import Logo from "../../assets/icons/Logo";
-import { APP, QUIZ, APP_DETAILS, APP_TEAMS } from "../../Routes/Routes";
+import { APP, QUIZ, APP_DETAILS, APP_TEAMS, MEASURES, NEW_MEASURE } from "../../Routes/Routes";
 import { useHistory } from "react-router";
 import roles from '../../data/roles';
 // import useAuth from "../../hooks/useAuth";
@@ -54,6 +54,13 @@ const DrawerMenu = ({ open, onClose }) => {
       items: [
         { name: "Resolver cuestionario", route: `${APP}${QUIZ}`, disabled: false, roles: [roles.gestor, roles.admin, roles.cola] },
       ],
+    },
+    {
+      title: "Mediciones",
+      items: [
+        { name: 'Mediciones realizadas', route: `${APP}${MEASURES}`, disabled: false, roles: [roles.gestor, roles.admin] },
+        { name: 'Nueva medición', route: `${APP}${NEW_MEASURE}`, disabled: false, roles: [roles.gestor, roles.admin] },
+      ]
     },
   ];
 

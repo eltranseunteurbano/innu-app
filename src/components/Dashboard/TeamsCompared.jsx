@@ -7,6 +7,7 @@ import Chip from '../Chips/Chips';
 import { CancelRounded as CancelRoundedIcon } from '@material-ui/icons';
 import Button from '../Button/Button';
 import { Link } from 'react-router-dom';
+import { APP, APP_TEAMS_COMPARAR } from '../../Routes/Routes';
 
 const TeamsCompared = () => {
   const classes = useStyles();
@@ -20,7 +21,7 @@ const TeamsCompared = () => {
     setTeamsFiltered(value);
   }, []);
 
-  const onChangeSelectedItems = (event, value) => {
+  const onChangeSelectedItems = (value) => {
     if(!comparedTeams.find(item => item === value)){
       if(comparedTeams.length < 3){
         setComparedTeams((old) => {
@@ -51,18 +52,21 @@ const TeamsCompared = () => {
 
   return (
     <Container disableGutters className={classes.root}>
-      <Typography className={classes.subtitle}>Escala del 0 al 5 - Todas las gráficas de los equipos estan comparadas con la de la empresa</Typography>
+      <Typography className={classes.subtitle}>Escala del 1 al 5 - Todas las gráficas de los equipos estan comparadas con la de la empresa</Typography>
       <Typography className={classes.title}>Ranking de equipos</Typography>
-      <Autocomplete
-        options={teams}
-        isCheckbox={true}
-        placeholder="Buscar equipo"
-        label="Equipos"
-        onChange={onChangeAutoComplete}
-      />
+      <Box className={classes.autocompleteBox}>
+        <Autocomplete
+          options={teams}
+          isCheckbox={true}
+          placeholder="Buscar equipo"
+          label="Equipos"
+          onChange={onChangeAutoComplete}
+        />
+        <Typography className={classes.subtitle}>Selecciona los equipos que quieres comparar</Typography>
+      </Box>
       <Box className={classes.spiderBox}>
         {
-          teamsFiltered.map(({ id, title, values }, index) => 
+          teamsFiltered.map(({ id, title }) => 
             <SpiderChart
               name={title}
               isSelected={comparedTeams.find(item => item === title)}
@@ -93,7 +97,7 @@ const TeamsCompared = () => {
                 }
               </Box>
               <Box className={classes.footerBtn}>
-                <Button component={Link} to="">Comparar</Button>
+                <Button component={Link} to={`${APP}${APP_TEAMS_COMPARAR}`}>Comparar</Button>
               </Box>
             </Box>
           </Box>
@@ -131,6 +135,13 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.up("sm")]: {
         padding: theme.spacing(4),
       },
+    },
+    autocompleteBox: {
+      position: 'sticky',
+      top: theme.spacing(0),
+      zIndex: 2,
+      backgroundColor: theme.palette.white.main,
+      padding: theme.spacing(2, 0),
     },
     title: {
       ...theme.typography.subtitle1,

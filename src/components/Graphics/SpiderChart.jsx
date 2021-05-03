@@ -1,17 +1,23 @@
 import React from "react";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
-import { Typography, Card } from "@material-ui/core";
+import { Typography, Paper, ButtonBase, Zoom  } from "@material-ui/core";
+import { RadioButtonUncheckedRounded as RadioButtonUncheckedRoundedIcon, RadioButtonCheckedRounded as RadioButtonCheckedRoundedIcon} from '@material-ui/icons';
 import variables from '../../data/variables';
 import { Radar } from 'react-chartjs-2';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
 import cn from 'classnames';
 
 const SpiderChart = ({ name, onSelect, isSelected, className }) => {
   const classes = useStyles();
   const theme = useTheme();
-  console.log(className)
+
   return (
-    <Card variant="outlined" className={cn(classes.root, className)}>
+    <ButtonBase component={Paper} onClick={() => onSelect(name)} variant="outlined" className={cn(classes.root, isSelected && classes.selected, className)}>
+      <Zoom in={!isSelected}>
+        <RadioButtonUncheckedRoundedIcon className={classes.icon} />
+      </Zoom>
+      <Zoom in={isSelected}>
+        <RadioButtonCheckedRoundedIcon className={classes.iconSelected} />
+      </Zoom>
       <Typography className={classes.title}>Variables de cultura de innovación</Typography>
       <Typography className={classes.team}>Resultados de: <strong style={{ color: theme.palette.red.main }}>{name}</strong></Typography>
       <Radar
@@ -44,11 +50,8 @@ const SpiderChart = ({ name, onSelect, isSelected, className }) => {
 
           }
         }}
-        />
-      <ToggleButtonGroup value={isSelected} exclusive onChange={(event, value) => onSelect(event, name) }>
-        <ToggleButton classes={{root: classes.btn }} value={name}>Comparar</ToggleButton>
-      </ToggleButtonGroup>
-    </Card>
+      />
+    </ButtonBase>
   )
 }
 
@@ -60,6 +63,7 @@ const useStyles = makeStyles((theme) =>
       boxSizing: 'border-box',
       padding: theme.spacing(2),
       transition: 'all .4s',
+      border: '1px solid rgba(0, 0, 0, 0.12)',
       borderRadius: theme.spacing(1),
       backgroundColor: theme.palette.white.main,
       display: 'flex',
@@ -86,6 +90,22 @@ const useStyles = makeStyles((theme) =>
         border: `solid 1px ${theme.palette.red.main}`
       }
     },
+    selected: {
+      border: `1px solid ${theme.palette.red.main}`,
+      backgroundColor: `${theme.palette.rose.main} !important` ,
+    },
+    iconSelected: {
+      color: theme.palette.red.main,
+      position: 'absolute',
+      top: theme.spacing(1),
+      right: theme.spacing(1),
+    },
+    icon: {
+      color: theme.palette.midGrey.main,
+      position: 'absolute',
+      top: theme.spacing(1),
+      right: theme.spacing(1),
+    }
   })
 );
 export default SpiderChart;
