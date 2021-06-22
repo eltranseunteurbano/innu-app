@@ -16,19 +16,7 @@ const NewMeasure = (props) => {
   const onSaveMeasure = () => {
     if(formik.isValid){
       formik.handleSubmit();
-      console.log(formik.status)
     }
-
-    if(formik.status === "Enviado") {
-      formik.setFieldValue({
-        startDate: '',
-        endDate: '',
-        name: ''
-      });
-      onClose();
-    }
-
-    // console.log(formik.isSubmitting)
   }
   
   return (
@@ -56,15 +44,19 @@ const NewMeasure = (props) => {
 
           <FormikTextField
             formik={formik}
+            isDate={true}
             valueId="startDate"
             placeholder="24/10/21"
             label="Fecha de inicio"
             fullWidth
             className="mb-2"
+            type="date"
           />
 
           <FormikTextField
             formik={formik}
+            isDate={true}
+            type="date"
             valueId="endDate"
             placeholder="24/11/21"
             label="Fecha de fin"

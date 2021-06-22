@@ -5,17 +5,20 @@ import Button from '../../components/Button/Button';
 import cn from 'classnames';
 import { ToggleButtonGroup, ToggleButton  } from '@material-ui/lab';
 import { NavBarContext } from "../../context/NavBarContext";
+import firebase from '../../firebase/firebase';
 
 const Quiz = () => {
   const classes = useStyles();
   const [answer, setAnswer] = React.useState(null);
-  const questions = [1,2,3,4,6,7,8,9,10,11,12,13,14,15]
+  const [valuesAnswer, setValuesAnswer] = React.useState([]);
   const [variablesState, setVariablesState ] = React.useState({});
+  const [ questions, setQuestions ] = React.useState([]);
+  const [contador, setContador] = React.useState(0);
 
   const { onHandleChangeTite } = React.useContext(NavBarContext);
 
   React.useEffect(() => {
-    onHandleChangeTite('Cuestionario')
+    onHandleChangeTite('Cuestionario');
   }, [onHandleChangeTite]);
 
   const handleChange = (value, id) => {
@@ -23,8 +26,50 @@ const Quiz = () => {
   };
   
   const onHandleChangeAnswer = (event, value) => {
-    setAnswer(value)
+    setAnswer(value);
   }
+
+  const getData = async() => {
+    await firebase.firestore().collection('variables')
+    .onSnapshot((quertSnapshot) => {
+      // localMeasures.push(doc.data());
+      let variables = [];
+      let questions = [];
+      quertSnapshot.forEach((doc) => {
+        variables.push(doc.data());
+      })
+
+      variables.forEach(subVariable => {
+        subVariable.subvariables.forEach(ques => {
+          ques.questions.forEach(question => questions.push(question))
+        })
+      })
+
+      setQuestions(questions);
+    });    
+  }
+
+  const next = () => {
+    let temp = valuesAnswer;
+    temp.push(answer);
+    setValuesAnswer(temp);
+
+    if(contador < 20) {
+      setContador(prev => prev + 1);
+      setAnswer(null);
+    }
+  }
+
+  const back = () => {
+    if(contador > 0){
+      setContador(prev => prev - 1);
+      setAnswer(valuesAnswer[contador])
+    }
+  }
+
+  React.useEffect(() => {
+    getData();
+  }, [])
 
   React.useEffect(() => {
     const keyPress = (event) => {
@@ -40,14 +85,16 @@ const Quiz = () => {
 
   return (
     <Container disableGutters className={classes.root}>
-      <FormControl className={cn(classes.card, classes.navigation, "px-0")}  style={{overflow: 'hidden'}} component={Paper}>
+      <FormControl className={cn(classes.card, classes.navigation, "px-0")}  style={{overflow: 'auto'}} component={Paper}>
         <FormGroup  style={{width: '100%'}}>
           <FormLabel className={cn(classes.progressBarTitle, classes.customTitle)}>Cuestionario</FormLabel>
           {
-            questions.map((item) => 
-              (<FormControlLabel label={`Pregunta ${item}`} key={"Pregunta " + item} className={classes.navigationItem}
-                control={<Checkbox checked={variablesState[item] ? variablesState[item] : false}
-                onChange={(event) =>handleChange(event.target.checked, item)} color="default" classes={{ checked: classes.checkbox}}
+            questions.slice(0, 20).map((item, pos) => 
+              (<FormControlLabel label={item.question} key={item.id} className={classes.navigationItem}
+                control={<Checkbox checked={pos < contador ? true: false}
+                onChange={(event) =>handleChange(event.target.checked, item)} 
+                onClick={() => setContador(pos)}
+                color="default" classes={{ checked: classes.checkbox}}
                 />}
               />)
             )
@@ -59,23 +106,27 @@ const Quiz = () => {
           <Typography className={classes.nameVariable}>Nombre de la variable</Typography>
           <Typography className={classes.progressBarTitle}>Progreso General</Typography>
           <Box className={classes.progressBar} >
-            <Box className={classes.progressBarContent} style={{width: '40%'}} />
+            <Box className={classes.progressBarContent} style={{width: `${contador * 100 / 20}%`}} />
           </Box>
         </Box>
         <Box className={classes.questionBox} >
           <Typography className={classes.escala}>En una escala del 1 al 5, <br /><strong>siendo 1 el más bajo y el 5 el más alto</strong></Typography>
-          <Typography className={classes.question}>¿Cómo te sientes el día de hoy?</Typography>
+          <Typography className={classes.question}>{questions[contador]?.question}</Typography>
           <ToggleButtonGroup exclusive value={answer} onChange={onHandleChangeAnswer} >
             {
               [1,2,3,4,5].map((item) => 
-                <ToggleButton key={item + 'togglebutton'} value={item} classes={{ root: classes.toggleButton, selected: classes.toggleButtonSelected }}>{item}</ToggleButton>
+                <ToggleButton
+                  key={item + 'togglebutton'}
+                  value={item}
+                  classes={{ root: classes.toggleButton, selected: classes.toggleButtonSelected }}
+                >{item}</ToggleButton>
               )
             }
           </ToggleButtonGroup>
         </Box>
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-          <Button className="mb-1">Continuar</Button>
-          <Button variant="text">VOLVER A LA PREGUNTA ANTERIOR</Button>
+          <Button className="mb-1" onClick={next} disabled={!answer}>Continuar</Button>
+          <Button variant="text" onClick={back} disabled={contador === 0}>VOLVER A LA PREGUNTA ANTERIOR</Button>
         </Box>
       </Card>
     </Container>
@@ -186,6 +237,9 @@ const useStyles = makeStyles((theme) =>
       marginLeft: theme.spacing(0),
       backgroundColor: `${theme.palette.midGrey.main}20`,
       width: '100%',
+      maxHeight: 40,
+      overflow: 'hidden',
+      display: 'block',
       '&:nth-child(odd)': {
         backgroundColor: theme.palette.white.main,
       }
@@ -201,6 +255,7 @@ const useStyles = makeStyles((theme) =>
     navigation: {
       display: 'none',
       height: 'fit-content',
+      maxHeight: '85vh',
       paddingBottom: 0,
       [theme.breakpoints.up("md")]: {
         display: 'block',

@@ -7,7 +7,7 @@ import { getFormatDate, getTimerDate } from "../../utils/getFormatDate";
 import moment from 'moment';
 
 const MeasureCard = (props) => {
-  const { createdAt, startDate, endDate, isFinished } = props;
+  const { createdAt, startDate, endDate, isFinished, name } = props;
   const classes = useStyles();
   const [differenceTime, setDifferenceTime] = React.useState(moment());
 
@@ -27,7 +27,7 @@ const MeasureCard = (props) => {
   return(
     <Card className={cn(classes.root)}>
       <Typography className={classes.date}>{getFormatDate(createdAt.toDate())}</Typography>
-      <Typography className={classes.name}>Medición de Marzo</Typography>
+      <Typography className={classes.name}>{name}</Typography>
       <Divider className="my-2" />
       <Box className={classes.content}>
         <Box>

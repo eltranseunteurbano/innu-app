@@ -4,22 +4,39 @@ import { Box, Button, Container } from "@material-ui/core";
 import { NavBarContext } from "../../context/NavBarContext";
 import { AddRounded as AddRoundedIcon } from '@material-ui/icons';
 import MeasureCard from '../../components/Measure/MeasureCard';
-import useCompany from "../../hooks/useCompany";
 import NewMeasure from "../../components/Measure/NewMeasure";
+import firebase from '../../firebase/firebase';
 
 const Measures = () => {
   const classes = useStyles();
   const { onHandleChangeTite } = React.useContext(NavBarContext);
   const [ showDialog, setShowDialog ] = React.useState(false);
-  const { measures } = useCompany();
+  const [ measures, setMeasures ] = React.useState([])
 
   React.useEffect(() => {
-    onHandleChangeTite('Mediciones')
+    onHandleChangeTite('Mediciones');
   }, [onHandleChangeTite]);
 
   const onCloseDialog = () => {
     setShowDialog(!showDialog);
   }
+  
+  const getData = async() => {
+    await firebase.firestore().collection('companies')
+    .doc('Eixw2cYg85wdIusxzjLq').collection('measures')
+    .onSnapshot((quertSnapshot) => {
+      // localMeasures.push(doc.data());
+      let temp = [];
+      quertSnapshot.forEach((doc) => {
+        temp.push(doc.data());
+      })
+      setMeasures(temp);
+    });    
+  }
+
+  React.useEffect(() => {
+    getData();
+  }, [])
 
   return(
     <Container disableGutters className={classes.root}>
@@ -31,7 +48,7 @@ const Measures = () => {
         Programar nueva medición</Button>
         <Box className={classes.boxMeasures}>
           {
-            measures.map(({ id, isFinished, ...item }) => <MeasureCard key={id} isFinished={true} {...item}/>)
+            measures.map(({ id, ...item }) => <MeasureCard key={id} {...item}/>)
           }
         </Box>
         <NewMeasure onClose={onCloseDialog} open={showDialog} />

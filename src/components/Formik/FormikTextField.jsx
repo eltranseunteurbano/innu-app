@@ -6,6 +6,7 @@ const FormikTextField = (props) => {
   const {
     valueId,
     formik: { values, errors, handleChange, touched, handleBlur },
+    isDate = false,
   } = props;
 
   const value = values[valueId] || values[valueId] === 0 ? values[valueId] : "";
@@ -20,6 +21,7 @@ const FormikTextField = (props) => {
       helperText={
         errors[valueId] && touched[valueId] ? errors[valueId] : props.helperText
       }
+      InputProps={isDate ? { type: 'date' } : {}}
     />
   );
 };

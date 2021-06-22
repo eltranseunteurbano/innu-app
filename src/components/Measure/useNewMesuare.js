@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import { getFormikValidator } from "../../utils/getFormikValidator"
 import useAuth from "../../hooks/useAuth";
-import moment from 'moment';
+import firebase from '../../firebase/firebase';
 
 const initialValues = {
   startDate: "",
@@ -28,7 +28,18 @@ const useNewMeasure = () => {
     onSubmit: ({ name, startDate, endDate }) => {
       if(user){
         console.log({name, startDate, endDate})
-        formik.setStatus('Enviado')
+        firebase.firestore().collection('companies')
+        .doc('Eixw2cYg85wdIusxzjLq').collection('measures').add({
+          createdAt: new Date(),
+          endDate: new Date(endDate),
+          isFinished: false,
+          name,
+          startDate: new Date(startDate),
+        }).then((doc => {
+          firebase.firestore().collection('companies').doc('Eixw2cYg85wdIusxzjLq')
+          .collection('measures').doc(doc.id).update({id: doc.id})
+          formik.setStatus('Enviado');
+        }))
       } else {
         console.error('error');
       }
