@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import {
   Box,
   Paper,
@@ -18,6 +18,7 @@ import useAuth from "../../hooks/useAuth";
 
 const CompareScores = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const { user } = useAuth();
   const [measures, setMeasure] = React.useState([]);
   const [compareScore, setCompareScore] = React.useState([]);
@@ -48,15 +49,13 @@ const CompareScores = () => {
       measureItem.name = name;
 
       measureItem.measureOne = measures[measures.length - 1]?.rawData.members.find(item => item.user === user?.uid).subvariables?.find(item => item.id === id)?.average;
-      // measureItem.measureTwo = measures[measures.length - 2].rawData.find(item => item.user === user.uid).subvariables.find(item => item.id === id).average;
+      measureItem.measureTwo = measures[measures.length - 2]?.rawData.members.find(item => item.user === user?.uid).subvariables?.find(item => item.id === id)?.average;
       if(!!measureItem.measureOne){
         tableMeasure.push(measureItem);
       }
     });
 
     setCompareScore(tableMeasure);
-
-    console.log(tableMeasure);
   }, [measures, user, variables])
 
 
@@ -64,8 +63,8 @@ const CompareScores = () => {
     <Paper className={cn(classes.root)}>
       <Typography className={classes.title}>Compara tus resultados</Typography>
       <Box className={classes.datesBox}>
-        <TextField fullWidth label="Medición 1" placeholder=""/>
-        <TextField fullWidth label="Medición 2x" placeholder=""/>
+        <TextField fullWidth label="Medición 1" placeholder="22/05/2021" type="date" style={{width: "100%"}} />
+        <TextField fullWidth label="Medición 2" placeholder="22/06/2021" type="date" style={{width: "100%"}} />
       </Box>
       <Box style={{ width: "100%", overflow: "overlay" }}>
         <Table>
@@ -107,8 +106,8 @@ const CompareScores = () => {
                 <TableCell align="center">{measureOne}</TableCell>
                 {measureTwo && <>
                   <TableCell align="center">{measureTwo}</TableCell>
-                  <TableCell align="center" className={classes.cellItem}>
-                    {measureOne + measureTwo / 2}
+                  <TableCell align="center" className={classes.cellItem} style={ ((measureTwo - measureOne) / measureOne * 100) < 0 ? { color: theme.palette.red.main, fontWeight: 'bold' } : { color: "rgb(34, 195, 34)", fontWeight: 'bold' }}>
+                    {((measureTwo - measureOne) / measureOne * 100).toFixed(2)}
                   </TableCell>
                   </>
                 }
@@ -164,7 +163,7 @@ const useStyles = makeStyles((theme) =>
     datesBox: {
       display: "flex",
       justifyContent: "space-between",
-      columnGap: theme.spacing(2),
+      columnGap: theme.spacing(5),
       marginBottom: theme.spacing(2),
     },
     tableColorContent: {

@@ -71,6 +71,16 @@ const Quiz = () => {
     getData();
   }, [])
 
+  // React.useEffect(() => {
+  //   firebase.firestore().collection('companies').doc('Eixw2cYg85wdIusxzjLq').collection('measures').doc('0VgLGubRPCLTEuWQfPbH').get()
+  //   .then((doc) => {
+      
+  //           // doc.data() is never undefined for query doc snapshots
+  //           console.log(doc.id, " => ", doc.data());
+  //           firebase.firestore().collection('companies').doc('Eixw2cYg85wdIusxzjLq').collection('measures').doc('AVDFnd92CrueYz5wk3bv').update(doc.data())
+  //   })
+  // }, [])
+
   React.useEffect(() => {
     const keyPress = (event) => {
       if(event.key === '1') setAnswer(1);

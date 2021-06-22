@@ -6,7 +6,6 @@ import cn from 'classnames';
 
 const LastMeasures = ({ data, className, callback, callbackTitle }) => {
   const classes = useStyles();
-
   return (
     <Paper className={cn(classes.root, className)}>
       <Barras title="Gráfico de cultura de innovación" data={data} callbackTitle={callbackTitle} callback={callback} />

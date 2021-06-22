@@ -3,12 +3,15 @@ import { Box, ButtonBase, Typography } from "@material-ui/core";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import cn from "classnames";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const BarSeries = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const { data, className, title = "Titulo de la gráfica", callback, callbackTitle = 'Ver más' } = props;
-  const finalData = data.slice(-3).reverse();
+  const finalData = data;
+
+  if(!finalData[0]) return <Skeleton className={classes.root} variant="rect" height={300}/>;
 
   return (
     <Box className={classes.root}>
@@ -31,7 +34,7 @@ const BarSeries = (props) => {
             labelStyle={{ ...theme.typography.body2, fontWeight: 600 }}
             />
           <Legend content={<CustomLegend />} verticalAlign="bottom" />
-          {
+          {!!finalData[0] &&
             Object.keys(finalData[0]).map((item, index) => {
               if(item === 'name' || item === 'colors') return undefined
               return(
