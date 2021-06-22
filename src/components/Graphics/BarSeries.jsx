@@ -35,7 +35,11 @@ const BarSeries = (props) => {
             Object.keys(finalData[0]).map((item, index) => {
               if(item === 'name' || item === 'colors') return undefined
               return(
-                <Bar key={item + index} dataKey={item} fill={Object.values(finalData[0].colors)[index - 1]} />
+                <Bar
+                  key={item + index}
+                  dataKey={item}
+                  fill={Object.values(finalData[0].colors)[index - 1]}
+                />
               )
             })
           }
@@ -55,7 +59,7 @@ const CustomLegend = (props) => {
         payload.map((entry) => {
           let legendName = legenCustomLabel(entry.value);
           return (
-          <Box className={classes.legendItem}>
+          <Box className={classes.legendItem} key={legendName}>
             <Box style={{ backgroundColor: entry.color, width: '8px', height: '8px', borderRadius: '8px'}}/>
             <Typography className={classes.label}>{legendName}</Typography>
           </Box>

@@ -4,27 +4,37 @@ import { Box, Button, Container } from "@material-ui/core";
 import { NavBarContext } from "../../context/NavBarContext";
 import { AddRounded as AddRoundedIcon } from '@material-ui/icons';
 import MeasureCard from '../../components/Measure/MeasureCard';
+import useCompany from "../../hooks/useCompany";
+import NewMeasure from "../../components/Measure/NewMeasure";
 
 const Measures = () => {
   const classes = useStyles();
   const { onHandleChangeTite } = React.useContext(NavBarContext);
+  const [ showDialog, setShowDialog ] = React.useState(false);
+  const { measures } = useCompany();
 
   React.useEffect(() => {
     onHandleChangeTite('Mediciones')
   }, [onHandleChangeTite]);
+
+  const onCloseDialog = () => {
+    setShowDialog(!showDialog);
+  }
 
   return(
     <Container disableGutters className={classes.root}>
       <Button
         className={classes.newMeasureBtn}
         endIcon={<AddRoundedIcon />}
+        onClick={onCloseDialog}
       >
         Programar nueva medición</Button>
         <Box className={classes.boxMeasures}>
           {
-            [0,0,0,0,0].map((item) => <MeasureCard />)
+            measures.map(({ id, isFinished, ...item }) => <MeasureCard key={id} isFinished={true} {...item}/>)
           }
         </Box>
+        <NewMeasure onClose={onCloseDialog} open={showDialog} />
     </Container>
   )
 }

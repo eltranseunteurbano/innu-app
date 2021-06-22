@@ -11,6 +11,7 @@ import Error404 from "../containers/Error404/Error404";
 import { LOGIN, APP, ERROR, HOME } from "./Routes";
 import { AuthProvider } from "../context/AuthContext";
 import Cohere from 'cohere-js';
+import { CompanyProvider } from "../context/CompanyContext";
 
 function App() {
   Validator.useLang("es");
@@ -18,18 +19,20 @@ function App() {
 
   return (
     <AuthProvider>
-      <ThemeProvider theme={customTheme}>
-        <GlobalCss />
-        <BrowserRouter>
-          <Switch>
-            <Route path={LOGIN} exact component={Login} />
-            <Route path={ERROR} exact component={Error404} />
-            <Route path={HOME} exact component={Home} />
-            <Route path={APP} component={AppRoute} />
-            <Redirect to={APP} />
-          </Switch>
-        </BrowserRouter>
-      </ThemeProvider>
+      <CompanyProvider>
+        <ThemeProvider theme={customTheme}>
+          <GlobalCss />
+          <BrowserRouter>
+            <Switch>
+              <Route path={LOGIN} exact component={Login} />
+              <Route path={ERROR} exact component={Error404} />
+              <Route path={HOME} exact component={Home} />
+              <Route path={APP} component={AppRoute} />
+              <Redirect to={APP} />
+            </Switch>
+          </BrowserRouter>
+        </ThemeProvider>
+      </CompanyProvider>
     </AuthProvider>
   );
 }

@@ -59,7 +59,6 @@ const DrawerMenu = ({ open, onClose }) => {
       title: "Mediciones",
       items: [
         { name: 'Mediciones realizadas', route: `${APP}${MEASURES}`, disabled: false, roles: [roles.gestor, roles.admin] },
-        { name: 'Nueva medición', route: `${APP}${NEW_MEASURE}`, disabled: false, roles: [roles.gestor, roles.admin] },
       ]
     },
   ];
@@ -116,7 +115,7 @@ const DrawerMenu = ({ open, onClose }) => {
                 {items.map(({ name, route, roles, disabled, ...others }, i) => {
                   const isShow = !!roles.find((rol) => rol === userRol);
                   return (
-                    <Collapse in={isShow}>
+                    <Collapse in={isShow} key={name + roles}>
                       <MenuItem
                         className={cn(
                           classes.menuItem,

@@ -21,7 +21,7 @@ const TableTeamsPosition = ({ className, isCompany }) => {
     <Paper className={cn(classes.root, className)}>
       <Typography className={classes.title}>Ranking de equipos</Typography>
       <Box className={classes.tableBox}>
-        <Table cclassName={classes.table}>
+        <Table className={classes.table}>
           <TableHead>
             <TableRow className={classes.headerTable}>
               <TableCell size="small" className={classes.headerTableCell}><Typography className={classes.headerTableCellText}>Posición</Typography></TableCell>
@@ -38,7 +38,7 @@ const TableTeamsPosition = ({ className, isCompany }) => {
                 const randomDos = Math.floor(Math.random() * variables.length -1);
                 
                 return(
-                  <TableRow hover>
+                  <TableRow hover key={index}>
                     <TableCell size="small" align="center">{index}</TableCell>
                     <TableCell size="small">{item}</TableCell>
                     <TableCell size="small" align="center">{(Math.random() * 5).toFixed(2)}</TableCell>

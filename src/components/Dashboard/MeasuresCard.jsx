@@ -2,92 +2,34 @@ import React from "react";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { Paper, Box, Typography, Tooltip, Zoom } from "@material-ui/core";
 import cn from "classnames";
+import { Skeleton } from "@material-ui/lab";
+import axios from 'axios';
+import useAuth from "../../hooks/useAuth";
 
 const MeasuresCard = ({ className, isCompany }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const { user } = useAuth();
+  const [measure, setMeasure] = React.useState({});
+
+  React.useEffect(() => {
+    axios.get(`http://localhost:8080/api/results/Eixw2cYg85wdIusxzjLq`)
+    .then(( { data: { measures } } ) => {      
+      if(!!user){
+        setMeasure(() => measures[measures.length - 1].rawData.members.find(item => item.user === user.uid));
+      }
+    });
+    
+  }, [user])
 
   return (
     <Paper className={cn(classes.root, className)}>
-      <Box className={classes.measures}>
-        <Box className={classes.measuresItem}>
-          <Typography className={classes.measuresItemTitle}>
-            Puntaje Global
-          </Typography>
-          <Box
-            className={classes.measuresItemScore}
-            style={{ backgroundColor: theme.palette.rose.main }}
-          >
-            <Typography
-              className={classes.measuresItemScoreText}
-              style={{ color: theme.palette.red.main }}
-            >
-              3.5
-            </Typography>
-          </Box>
-        </Box>
-        {!isCompany && <Box className={classes.measuresItem}>
-          <Typography className={classes.measuresItemTitle}>
-            Ranking de Equipo
-          </Typography>
-          <Box
-            className={cn(classes.measuresItemScore, "px-2")}
-            style={{ backgroundColor: theme.palette.sky.main }}
-          >
-            <Typography
-              className={classes.measuresItemScoreText}
-              style={{ color: theme.palette.midGrey.main }}
-            >
-              14 <span style={{ color: theme.palette.blue.main }}>/ 15</span>
-            </Typography>
-          </Box>
-        </Box>}
-        {isCompany && <Box className={classes.measuresItem}>
-          <Typography className={classes.measuresItemTitle}>
-            Ranking de Empresas
-          </Typography>
-          <Box
-            className={cn(classes.measuresItemScore, "px-2")}
-            style={{ backgroundColor: theme.palette.sky.main }}
-          >
-            <Typography
-              className={classes.measuresItemScoreText}
-              style={{ color: theme.palette.midGrey.main }}
-            >
-              14 <span style={{ color: theme.palette.blue.main }}>/ +400</span>
-            </Typography>
-          </Box>
-        </Box>}
-        <Tooltip
-          title="Debilidad en Educación"
-          arrow
-          TransitionComponent={Zoom}
-        >
+      {
+        !!measure ?
+        <Box className={classes.measures}>
           <Box className={classes.measuresItem}>
             <Typography className={classes.measuresItemTitle}>
-              Debilidad en Educación
-            </Typography>
-            <Box
-              className={classes.measuresItemScore}
-              style={{ backgroundColor: theme.palette.esmerald.main }}
-            >
-              <Typography
-                className={classes.measuresItemScoreText}
-                style={{ color: theme.palette.deepGrey.main }}
-              >
-                1.3
-              </Typography>
-            </Box>
-          </Box>
-        </Tooltip>
-        <Tooltip
-          title="Fortaleza de Comunicación"
-          arrow
-          TransitionComponent={Zoom}
-        >
-          <Box className={classes.measuresItem}>
-            <Typography className={classes.measuresItemTitle}>
-              Fortaleza de Comunicación
+              Promedio
             </Typography>
             <Box
               className={classes.measuresItemScore}
@@ -97,12 +39,107 @@ const MeasuresCard = ({ className, isCompany }) => {
                 className={classes.measuresItemScoreText}
                 style={{ color: theme.palette.deepGrey.main }}
               >
-                3.3
+                {measure?.average?.toFixed(2)}
               </Typography>
             </Box>
           </Box>
-        </Tooltip>
+          {!isCompany && <Box className={classes.measuresItem}>
+            <Typography className={classes.measuresItemTitle}>
+              Ranking de Equipo
+            </Typography>
+            <Box
+              className={cn(classes.measuresItemScore, "px-2")}
+              style={{ backgroundColor: theme.palette.sky.main }}
+            >
+              <Typography
+                className={classes.measuresItemScoreText}
+                style={{ color: theme.palette.midGrey.main }}
+              >
+                14 <span style={{ color: theme.palette.blue.main }}>/ 15</span>
+              </Typography>
+            </Box>
+          </Box>}
+          {isCompany && <Box className={classes.measuresItem}>
+            <Typography className={classes.measuresItemTitle}>
+              Ranking de Empresas
+            </Typography>
+            <Box
+              className={cn(classes.measuresItemScore, "px-2")}
+              style={{ backgroundColor: theme.palette.sky.main }}
+            >
+              <Typography
+                className={classes.measuresItemScoreText}
+                style={{ color: theme.palette.midGrey.main }}
+              >
+                14 <span style={{ color: theme.palette.blue.main }}>/ +400</span>
+              </Typography>
+            </Box>
+          </Box>}
+          <Tooltip
+            title={`Variable a mejorar: ${measure.min?.name}`}
+            arrow
+            TransitionComponent={Zoom}
+          >
+            <Box className={classes.measuresItem}>
+              <Typography className={classes.measuresItemTitle}>
+                Variable a mejorar: {measure.min?.name}
+              </Typography>
+              <Box
+                className={classes.measuresItemScore}
+                style={{ backgroundColor: theme.palette.rose.main }}
+              >
+                <Typography
+                  className={classes.measuresItemScoreText}
+                  style={{ color: theme.palette.red.main }}
+                >
+                  {measure.min?.average}
+                </Typography>
+              </Box>
+            </Box>
+          </Tooltip>
+          <Tooltip
+            title={`Fortaleza: ${measure.max?.name}`}
+            arrow
+            TransitionComponent={Zoom}
+          >
+            <Box className={classes.measuresItem}>
+              <Typography className={classes.measuresItemTitle}>
+                Fortaleza: {measure.max?.name}
+              </Typography>
+              <Box
+                className={classes.measuresItemScore}
+                style={{ backgroundColor: theme.palette.esmerald.main }}
+              >
+                <Typography
+                  className={classes.measuresItemScoreText}
+                  style={{ color: theme.palette.deepGrey.main }}
+                >
+                  {measure.max?.average}
+                </Typography>
+              </Box>
+            </Box>
+          </Tooltip>
+        </Box>
+      :
+      <Box className={classes.measures}>
+        <Box className={classes.measuresItem}>
+          <Skeleton width="100px" variant="text" className="mb-1" />
+          <Skeleton width="48px" height="48px" variant="rect" />
+        </Box>
+        <Box className={classes.measuresItem}>
+          <Skeleton width="100px" variant="text" className="mb-1" />
+          <Skeleton width="48px" height="48px" variant="rect" />
+        </Box>
+        <Box className={classes.measuresItem}>
+          <Skeleton width="100px" variant="text" className="mb-1" />
+          <Skeleton width="48px" height="48px" variant="rect" />
+        </Box>
+        <Box className={classes.measuresItem}>
+          <Skeleton width="100px" variant="text" className="mb-1" />
+          <Skeleton width="48px" height="48px" variant="rect" />
+        </Box>
       </Box>
+      }
     </Paper>
   );
 };

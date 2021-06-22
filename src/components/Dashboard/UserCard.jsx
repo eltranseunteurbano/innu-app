@@ -9,28 +9,30 @@ import {
 } from "@material-ui/core";
 import cn from "classnames";
 import MeasuresCard from "./MeasuresCard";
-// import useAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
+import { Skeleton } from "@material-ui/lab";
 
 const UserCard = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchMDQuery = useMediaQuery(theme.breakpoints.up("md"));
-  // const { user } = useAuth();
+  const { user } = useAuth();
 
-  // if(!user) return null
   return (
     <>
       <Paper className={cn(classes.root)}>
         <Box className={classes.avatar}>
-          <Avatar className={classes.avatarImg} variant="rounded" src="">
-            {/* {user.name[0]} */}
-            J
-          </Avatar>
+          {
+            user && !!user.name ?
+              <Avatar className={classes.avatarImg} variant="rounded" src="">
+                {user.name[0]}
+              </Avatar>
+            :  
+            <Skeleton variant="circle" width="48px" height="48px"/>
+          }
           <Box>
-            <Typography className={classes.name}>Jaime</Typography>
-            <Typography className={classes.area}>
-              Desarrollo de producto
-            </Typography>
+            { user && !!user.name ? <Typography className={classes.name}>{user.name}</Typography> : <Skeleton variant="text" width="150px"/>}
+            { user && !!user.team ? <Typography className={classes.area}>{user.team}</Typography> : <Skeleton variant="text" width="100px" />}
           </Box>
         </Box>
         {matchMDQuery && <MeasuresCard className={classes.MDUpScore} />}

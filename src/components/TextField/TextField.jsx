@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) =>
       transform: "unset !important",
       marginBottom: "0.5em",
       ...theme.typography.body1,
-      textTransform: "capitalize",
+      textTransform: "inherit",
       color: `${theme.palette.deepGrey.main}!important`,
       '&[data-shrink="false"] + .MuiInputBase-formControl .MuiInputBase-input::placeholder': {
         opacity: "0.42 !important",

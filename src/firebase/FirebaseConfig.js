@@ -1,10 +1,10 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyCkvmuUkkcREMvDrHoLjBTnu9ndlQgPXf8",
-  authDomain: "innu-40599.firebaseapp.com",
-  projectId: "innu-40599",
-  storageBucket: "innu-40599.appspot.com",
-  messagingSenderId: "460681569416",
-  appId: "1:460681569416:web:b9a657f59da5ec66a62b3d",
+  apiKey: "AIzaSyBwQXHHFJBuohM59GBkFbYqCU7BC3K-OIU",
+  authDomain: "innu-63bc8.firebaseapp.com",
+  projectId: "innu-63bc8",
+  storageBucket: "innu-63bc8.appspot.com",
+  messagingSenderId: "1041887894520",
+  appId: "1:1041887894520:web:09fc5e52c0b0e3902b940d"
 };
 
 export default firebaseConfig;

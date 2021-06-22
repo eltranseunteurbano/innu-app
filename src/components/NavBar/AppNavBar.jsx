@@ -17,20 +17,20 @@ import {
 import Logo from "../../assets/icons/Logo";
 import cn from "classnames";
 import DrawerMenu from "./DrawerMenu";
-// import { useHistory } from "react-router";
-// import { HOME } from "../../Routes/Routes";
+import { useHistory } from "react-router";
+import { HOME } from "../../Routes/Routes";
 import { NavBarContext } from "../../context/NavBarContext";
-// import useAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
+import { Skeleton } from "@material-ui/lab";
 
 const AppNavBar = () => {
-  // const history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [showMenu, setShowMenu] = React.useState(null);
 
   const { title: titleNavbar } = React.useContext(NavBarContext)
-  // const { logOut } = useAuth();
-  // const { name, photo } = user;
+  const { logOut, user } = useAuth();
 
   const onClose = () => {
     setShowDrawer(!showDrawer);
@@ -40,10 +40,10 @@ const AppNavBar = () => {
     setShowMenu(event.currentTarget);
   };
 
-  // const signOut = () => {
-  //   logOut();
-  //   history.push(HOME)
-  // }
+  const signOut = () => {
+    logOut();
+    history.push(HOME)
+  }
 
   return (
     <>
@@ -61,10 +61,18 @@ const AppNavBar = () => {
           <Typography className={classes.title}>{titleNavbar}</Typography>
           <ButtonBase className={classes.avatar} onClick={onShowMenu}>
             <Divider orientation="vertical" flexItem />
-            <Avatar variant="rounded" className={classes.btnAvatar} src={''}>
-              {/* {name[0]} */}H
-            </Avatar>
-            <Typography className={classes.btnText}>ASD</Typography>
+            
+            {user && !!user.name ?
+              <Avatar variant="rounded" className={classes.btnAvatar} src={user.photo ?? undefined}>
+                {user.name[0]}
+              </Avatar>
+            :  
+              <Skeleton variant="circle" width="24px" height="24px"/>}
+            {user && !!user.name ?
+              <Typography className={classes.btnText}>{user.name}</Typography>
+              :
+              <Skeleton variant="text" width="150px"/>
+            }
             <ArrowDropDownRoundedIcon />
           </ButtonBase>
           <Menu
@@ -86,8 +94,7 @@ const AppNavBar = () => {
             classes={{ paper: classes.headerProfileMenu }}
           >
             <MenuItem>Perfil</MenuItem>
-            {/* <MenuItem onClick={signOut}> */}
-            <MenuItem>
+            <MenuItem onClick={signOut}>
               Cerrar sesión
             </MenuItem>
           </Menu>

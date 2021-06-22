@@ -13,16 +13,59 @@ import {
 import cn from "classnames";
 import TextField from "../TextField/TextField";
 import variables from "../../data/variables";
+import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const CompareScores = () => {
   const classes = useStyles();
+  const { user } = useAuth();
+  const [measures, setMeasure] = React.useState([]);
+  const [compareScore, setCompareScore] = React.useState([]);
+  const [variables, setVariables] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get(`http://localhost:8080/api/results/Eixw2cYg85wdIusxzjLq`)
+    .then(( { data: { measures } } ) => {      
+      setMeasure(measures);
+    });
+  }, [])
+
+  React.useEffect(() => {
+    axios.get(`http://localhost:8080/api/variables`)
+    .then(( { data } ) => {      
+      setVariables(data);
+    });
+  }, []);
+
+  React.useEffect(() => {
+    const tableMeasure = [];
+
+    variables.forEach(({ color, id, name}) => {
+      let measureItem = {};
+
+      measureItem.id = id;
+      measureItem.color = color;
+      measureItem.name = name;
+
+      measureItem.measureOne = measures[measures.length - 1]?.rawData.members.find(item => item.user === user?.uid).subvariables?.find(item => item.id === id)?.average;
+      // measureItem.measureTwo = measures[measures.length - 2].rawData.find(item => item.user === user.uid).subvariables.find(item => item.id === id).average;
+      if(!!measureItem.measureOne){
+        tableMeasure.push(measureItem);
+      }
+    });
+
+    setCompareScore(tableMeasure);
+
+    console.log(tableMeasure);
+  }, [measures, user, variables])
+
 
   return (
     <Paper className={cn(classes.root)}>
       <Typography className={classes.title}>Compara tus resultados</Typography>
       <Box className={classes.datesBox}>
-        <TextField fullWidth label="Medición 1" />
-        <TextField fullWidth label="Medición 2x" />
+        <TextField fullWidth label="Medición 1" placeholder=""/>
+        <TextField fullWidth label="Medición 2x" placeholder=""/>
       </Box>
       <Box style={{ width: "100%", overflow: "overlay" }}>
         <Table>
@@ -35,16 +78,20 @@ const CompareScores = () => {
               <TableCell align="center" className={classes.HeaderCell}>
                 Med 1
               </TableCell>
-              <TableCell align="center" className={classes.HeaderCell}>
-                Med 2
-              </TableCell>
-              <TableCell align="center" className={classes.HeaderCell}>
-                %
-              </TableCell>
+              {
+                measures.length > 1 && <>
+                <TableCell align="center" className={classes.HeaderCell}>
+                  Med 2
+                </TableCell>
+                <TableCell align="center" className={classes.HeaderCell}>
+                  %
+                </TableCell>
+                </>
+              }
             </TableRow>
           </TableHead>
           <TableBody>
-            {variables.map(({ color, name, med1, med2, id }) => (
+            {compareScore.map(({ color, name, measureOne, measureTwo, id }) => (
               <TableRow key={id} hover>
                 <TableCell className={classes.tableColorContent}>
                   <Box
@@ -57,12 +104,15 @@ const CompareScores = () => {
                   />
                 </TableCell>
                 <TableCell>{name}</TableCell>
-                <TableCell align="center">{med1}</TableCell>
-                <TableCell align="center">{med2}</TableCell>
-                <TableCell align="center" className={classes.cellItem}>
-                  {med1 + med2 / 2}
-                </TableCell>
-              </TableRow>
+                <TableCell align="center">{measureOne}</TableCell>
+                {measureTwo && <>
+                  <TableCell align="center">{measureTwo}</TableCell>
+                  <TableCell align="center" className={classes.cellItem}>
+                    {measureOne + measureTwo / 2}
+                  </TableCell>
+                  </>
+                }
+              </TableRow> 
             ))}
           </TableBody>
         </Table>

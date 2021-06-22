@@ -1,32 +1,48 @@
 import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Card, Divider, Typography, Box } from "@material-ui/core";
-import { AddRounded as AddRoundedIcon } from '@material-ui/icons';
 import Button from '../Button/Button';
 import cn from 'classnames';
+import { getFormatDate, getTimerDate } from "../../utils/getFormatDate";
+import moment from 'moment';
 
-const MeasureCard = () => {
+const MeasureCard = (props) => {
+  const { createdAt, startDate, endDate, isFinished } = props;
   const classes = useStyles();
+  const [differenceTime, setDifferenceTime] = React.useState(moment());
+
+  React.useEffect(() => {
+    const now = moment();
+    const finish = moment(endDate.toDate());
+
+    let timer;
+    timer =setTimeout( () => setDifferenceTime(moment(finish.diff(now))), 1000);
+
+    return () => {
+      if(timer) clearTimeout(timer)
+    }
+    
+  }, [endDate, differenceTime])
 
   return(
     <Card className={cn(classes.root)}>
-      <Typography className={classes.date}>04 Marzo del 2021</Typography>
+      <Typography className={classes.date}>{getFormatDate(createdAt.toDate())}</Typography>
       <Typography className={classes.name}>Medición de Marzo</Typography>
       <Divider className="my-2" />
       <Box className={classes.content}>
         <Box>
           <Typography className={classes.titleText}>Tiempo restante</Typography>
-          <Typography className={classes.contentText}>10d:20h:40m:30s</Typography>
+          <Typography className={classes.contentText}>{isFinished ? 'Terminada' : getTimerDate(differenceTime)}</Typography>
         </Box>
 
         <Box>
           <Typography className={classes.titleText}>Fecha de inicio</Typography>
-          <Typography className={classes.contentText}>1 Mayo 2021</Typography>
+          <Typography className={classes.contentText}>{getFormatDate(startDate.toDate())}</Typography>
         </Box>
 
         <Box>
           <Typography className={classes.titleText}>Fecha de finalización</Typography>
-          <Typography className={classes.contentText}>15 Mayo 2021</Typography>
+          <Typography className={classes.contentText}>{getFormatDate(endDate.toDate())}</Typography>
         </Box>
 
         <Box>
@@ -35,7 +51,7 @@ const MeasureCard = () => {
         </Box>
       </Box>
       <Box className={classes.btnWrapper}>
-        <Button color="primary" variant="contained">GENERAR REPORTE</Button>
+        {isFinished && <Button color="primary" variant="contained">GENERAR REPORTE</Button>}
         <Button color="secondary" variant="text">VER DETALLES</Button>
       </Box>
     </Card>
@@ -79,6 +95,7 @@ const useStyles = makeStyles((theme) =>
     },
     date: {
       ...theme.typography.body2,
+      textTransform: 'capitalize',
       fontSize: '0.7rem',
     },
     name: {

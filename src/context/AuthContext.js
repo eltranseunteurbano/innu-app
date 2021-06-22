@@ -33,7 +33,8 @@ export const AuthProvider = ({ children }) => {
   }, [currentUser])
     
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((userTemp) => {
+    firebase.auth().onAuthStateChanged((userTemp) => { //posiblmente esto se esta disparando por cada vez que el getDataUser cambia
+      // console.log('cuantas veces pasa?');
       if(!!userTemp) {
         setCurrentUser(userTemp);
         getDataUser(userTemp.uid);
